@@ -3,7 +3,7 @@ package com.ssm.runoob.controller;
 import com.ssm.runoob.model.User;
 import com.ssm.runoob.service.TestService;
 import com.ssm.runoob.service.UserService;
-import com.ssm.runoob.util.FileUtil;
+import com.ssm.runoob.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -110,7 +110,7 @@ public class TestController {
      */
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     public String upload(@RequestParam("file") MultipartFile file) {
-        FileUtil.upload(file, "e:\\", file.getOriginalFilename());
+        FileUtils.upload(file, "e:\\", file.getOriginalFilename());
         return "redirect:/test/upload";
     }
 

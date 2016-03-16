@@ -13,8 +13,8 @@ import java.net.URLEncoder;
  *
  * @author Phil
  */
-public class FileUtil {
-    private static final  Logger logger = Logger.getLogger(FileUtil.class);
+public class FileUtils {
+    private static final  Logger logger = Logger.getLogger(FileUtils.class);
 
     /**
      * Upload boolean.

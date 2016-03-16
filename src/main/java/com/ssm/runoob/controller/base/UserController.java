@@ -5,7 +5,7 @@ import com.ssm.runoob.model.DTRequest;
 import com.ssm.runoob.model.DTResponse;
 import com.ssm.runoob.model.User;
 import com.ssm.runoob.service.UserService;
-import com.ssm.runoob.util.MsgUtil;
+import com.ssm.runoob.util.MsgUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,9 +52,9 @@ public class UserController {
     public Object insert(User user) {
         int v = userService.insert(user);
         if (v > 0) {
-            return MsgUtil.addSuccess();
+            return MsgUtils.addSuccess();
         } else {
-            return MsgUtil.addError();
+            return MsgUtils.addError();
         }
     }
     @ResponseBody
@@ -62,9 +62,9 @@ public class UserController {
     public Object del(@Param("id") long id) {
         int v = userService.deleteByPrimaryKey(id);
         if (v > 0) {
-            return MsgUtil.delSuccess();
+            return MsgUtils.delSuccess();
         } else {
-            return MsgUtil.delError();
+            return MsgUtils.delError();
         }
     }
 

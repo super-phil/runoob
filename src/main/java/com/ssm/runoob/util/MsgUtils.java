@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * Created by Phil on 2015/12/19.
  */
-public class MsgUtil {
+public class MsgUtils {
     public static JSONObject updateSuccess() {return delSuccess(MsgEnum.UPDATE_SUCCESS.getMsg());}
     public static JSONObject updateSuccess(String msg)  {
         return msg(MsgEnum.UPDATE_SUCCESS.getCode(), msg);}
