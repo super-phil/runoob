@@ -224,7 +224,7 @@
 //                "defaultContent": "<button class='btn-edit btn btn-xs btn-info'>编辑</button> <button class='btn-del btn btn-xs btn-danger'>删除</button>"//添加按钮
             }],
             "initComplete": function () {
-                var api = this.api();
+//                var api = this.api();
             }
         });
         //隐藏默认的搜索
@@ -252,7 +252,6 @@
                 return el.getAttribute('placeholder') || '';
             },
             valid: function (form) {
-                console.info(form);
                 //表单验证通过，提交表单到服务器
                 sys.submit(form, "/user/insert", function () {
                     table.ajax.reload();
