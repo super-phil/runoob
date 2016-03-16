@@ -18,6 +18,8 @@ public class RunoobExceptionResolver implements HandlerExceptionResolver {
     @Override
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
         logger.debug("RunoobExceptionResolver");
+        e.printStackTrace();
+
         if (e instanceof NullPointerException){
             logger.error("NullPointerException",e);
             return new ModelAndView("404");

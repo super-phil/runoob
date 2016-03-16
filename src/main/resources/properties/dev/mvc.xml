@@ -121,6 +121,7 @@
     </bean>
     <!--静态资源访问-->
     <mvc:resources mapping="/assets/**" location="/WEB-INF/assets/"/>
+    <mvc:resources mapping="/*.ico" location="/"/>
     <!--全局异常-->
     <bean class="com.ssm.runoob.exception.RunoobExceptionResolver"/>
 

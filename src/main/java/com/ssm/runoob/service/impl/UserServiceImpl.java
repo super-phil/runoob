@@ -3,8 +3,11 @@ package com.ssm.runoob.service.impl;
 import com.ssm.runoob.dao.UserMapper;
 import com.ssm.runoob.model.User;
 import com.ssm.runoob.service.UserService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Phil on 2016/2/25.
@@ -13,24 +16,30 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
     @Autowired
     private UserMapper userMapper;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
-        return userMapper.deleteByPrimaryKey(id);
+        int i = userMapper.deleteByPrimaryKey(id);
+        if (i > 0) {
+            logger.debug("Del user to database success");
+        } else {
+            logger.debug("Del user to database error!");
+        }
+        return i;
     }
 
     @Override
     public int insert(User record) {
-        int temp;
-        int temp1 = 0;
-        temp = userMapper.insert(record);
-//        if (1 == 1) {//测试事物
-//            throw new NullPointerException("测试测试事物!");
-//        }
-//        temp1 = usersMapper.insert(record);
-        return temp + temp1;
+        int i = userMapper.insert(record);
+        if (i > 0) {
+            logger.debug("Insert user to database success");
+        } else {
+            logger.debug("Insert user to database error!");
+        }
+        return i;
     }
 
     @Override
@@ -51,5 +60,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateByPrimaryKey(User record) {
         return userMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public List<User> findByQuery(String q, int start, int end) {
+        return userMapper.findByQuery(q,start,end);
+    }
+
+    @Override
+    public List<User> findByQueryAndOrderBy(String q, String orderBy, int start, int end) {
+        return userMapper.findByQueryAndOrderBy(q, orderBy, start, end);
+    }
+
+    @Override
+    public long count() {
+        return userMapper.count();
+    }
+
+    @Override
+    public long countByQuery(String q) {
+        return userMapper.countByQuery(q);
     }
 }

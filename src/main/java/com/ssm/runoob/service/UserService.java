@@ -2,6 +2,8 @@ package com.ssm.runoob.service;
 
 import com.ssm.runoob.model.User;
 
+import java.util.List;
+
 /**
  * Created by Phil on 2016/2/25.
  *
@@ -55,4 +57,12 @@ public interface UserService {
      * @mbggenerated
      */
     int updateByPrimaryKey(User record);
+
+    List<User> findByQuery(String q, int start, int end);
+    List<User> findByQueryAndOrderBy(String q, String orderBy,int start, int end);
+
+    long count();
+
+    long countByQuery(String q);
+
 }

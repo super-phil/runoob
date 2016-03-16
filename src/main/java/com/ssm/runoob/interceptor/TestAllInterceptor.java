@@ -14,8 +14,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TestAllInterceptor implements HandlerInterceptor {
     private final Logger logger = Logger.getLogger(this.getClass());
+
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        logger.debug("TestAllInterceptor test preHandle! URL:-->"+httpServletRequest.getRequestURI());
+        logger.debug("TestAllInterceptor test preHandle! method:-->+" + httpServletRequest.getMethod() + "+ URL:-->" + httpServletRequest.getRequestURI());
 //        logger.debug();
         return true;
     }
