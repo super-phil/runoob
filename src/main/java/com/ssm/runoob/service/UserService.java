@@ -58,7 +58,6 @@ public interface UserService {
      */
     int updateByPrimaryKey(User record);
 
-    List<User> findByQuery(String q, int start, int end);
     List<User> findByQueryAndOrderBy(String q, String orderBy,int start, int end);
 
     long count();

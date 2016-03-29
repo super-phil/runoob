@@ -57,6 +57,18 @@ public class UserController {
             return MsgUtils.addError();
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public Object update(User user) {
+        int v = userService.updateByPrimaryKeySelective(user);
+        if (v > 0) {
+            return MsgUtils.updateSuccess();
+        } else {
+            return MsgUtils.updateError();
+        }
+    }
+
     @ResponseBody
     @RequestMapping(value = "del", method = RequestMethod.POST)
     public Object del(@Param("id") long id) {

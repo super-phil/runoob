@@ -119,7 +119,7 @@
 </div>
 <!-- /.container -->
 <!-- .add modal -->
-<div class="modal fade" id="addModal">
+<div class="modal fade" id="user-add-modal">
     <div class="modal-dialog">
         <div class="modal-content span12">
             <div class="modal-header">
@@ -127,7 +127,7 @@
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">添加用户</h4>
             </div>
-            <form id="user-form" class="form-horizontal" method="post" autocomplete="off">
+            <form id="user-add-form" class="form-horizontal" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="inputName3" class="col-sm-2 control-label">用户名</label>
@@ -160,7 +160,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger">清空</button>
-                    <button type="button" class="submit-form btn btn-primary">提交</button>
+                    <button type="button" class="user-add-form-submit btn btn-primary">提交</button>
                 </div>
             </form>
         </div>
@@ -169,6 +169,49 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.add modal -->
+<div class="modal fade" id="user-edit-modal">
+    <div class="modal-dialog">
+        <div class="modal-content span12">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">编辑用户</h4>
+            </div>
+            <form id="user-edit-form" class="form-horizontal" method="post" autocomplete="off">
+                <input type="hidden" name="id"> <!--- 表单隐藏域 -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputName3" class="col-sm-2 control-label">用户名</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputName3" name="name" placeholder="用户名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputMobile3" class="col-sm-2 control-label">手机</label>
+
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputMobile3" name="mobile" placeholder="手机">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail3" name="email" placeholder="邮箱">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-danger">清空</button>
+                    <button type="button" class="user-edit-form-submit btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!--表格-->
@@ -185,13 +228,20 @@
 
 <script>
     $(function () {
-        var userMode = $('#addModal');
-        userMode.modal({
-            backdrop: true,
-            show: false,
-            keyboard: true
-        });
-        var userForm = $('#user-form');
+        var user_add_modal = $('#user-add-modal');
+        var user_edit_modal =  $('#user-edit-modal');
+//        user_add_modal.modal({
+//            backdrop: true,
+//            show: false,
+//            keyboard: true
+//        });
+//        user_edit_modal.modal({
+//            backdrop: true,
+//            show: false,
+//            keyboard: true
+//        });
+
+
         var table = $('#user-list').DataTable({
             "ajax": {
                 "url": "/user/index",
@@ -234,12 +284,9 @@
             table.search(this.value).draw();
         });
 
-        $('.btn-add').click(function () {
-            userMode.modal("show");
-            $(userForm.find('input[name=pwd]').parent().parent()[0]).show();//显示密码选项
-            userForm.find('input[name=id]').remove();
-        });
-        userForm.validator({
+        var user_add_form = $('#user-add-form');
+
+        user_add_form.validator({
             theme: "simple_top",
             fields: {
                 'name': 'required; username;',
@@ -255,23 +302,51 @@
                 //表单验证通过，提交表单到服务器
                 sys.submit(form, "/user/insert", function () {
                     table.ajax.reload();
-                    userMode.modal("hide");
+                    user_add_modal.modal("hide");
                 });
             }
-        }).on('click', '.submit-form', function (e) {
+        }).on('click', '.user-add-form-submit', function (e) {
             $(e.delegateTarget).trigger("validate");
+        });
+
+        var user_edit_form = $('#user-edit-form');
+        user_edit_form.validator({
+            theme: "simple_top",
+            fields: {
+                'name': 'required; username;',
+                'pwd': 'required; password;',
+                'mobile': 'required; mobile;',
+                'email': 'required; email;'
+            },
+            // 获取display
+            display: function (el) {
+                return el.getAttribute('placeholder') || '';
+            },
+            valid: function (form) {
+                //表单验证通过，提交表单到服务器
+                sys.submit(form, "/user/update", function () {
+                    table.ajax.reload();
+                    user_edit_modal.modal("hide");
+                });
+            }
+        }).on('click', '.user-edit-form-submit', function (e) {
+            $(e.delegateTarget).trigger("validate");
+        });
+        //添加
+        $('.btn-add').click(function () {
+            user_add_modal.modal("show");
         });
         //编辑
         $(document).on('click', '.btn-edit', function () {
             var _this = $(this);
             var _tr = _this.parent().parent()[0];
             var data = table.row(_tr).data();
-
-            $(userForm.find('input[name=pwd]').parent().parent()[0]).hide();//隐藏密码选项
-            userForm.append("<input type='hidden' name='id' value='" + data.id + "'>");
-            userMode.modal("show");
+            for (var obj in data) {
+                $('#user-edit-form input[name=' + obj + ']').val(data[obj]);
+            }
+            user_edit_modal.modal("show");
         });
-        //编辑
+        //删除
         $(document).on('click', '.btn-del', function () {
             var _this = $(this);
             var id = _this.data('id');

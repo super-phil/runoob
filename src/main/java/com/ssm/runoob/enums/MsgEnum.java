@@ -4,6 +4,7 @@ package com.ssm.runoob.enums;
  * Created by Phil on 2015/12/19.
  */
 public enum MsgEnum {
+    ERROR(999, "服务器异常!"),
     ADD_ERROR(1, "添加失败！"),
     ADD_SUCCESS(0, "添加成功！"),
     LOGIN_ERROR(1, "用户名或密码错误！"),

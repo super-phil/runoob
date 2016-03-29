@@ -9,12 +9,22 @@ import org.apache.commons.lang.StringUtils;
  * Created by Phil on 2015/12/19.
  */
 public class MsgUtils {
-    public static JSONObject updateSuccess() {return delSuccess(MsgEnum.UPDATE_SUCCESS.getMsg());}
-    public static JSONObject updateSuccess(String msg)  {
-        return msg(MsgEnum.UPDATE_SUCCESS.getCode(), msg);}
-    public static JSONObject updateError(){return delSuccess(MsgEnum.UPDATE_ERROR.getMsg());}
+    public static JSONObject updateSuccess() {
+        return delSuccess(MsgEnum.UPDATE_SUCCESS.getMsg());
+    }
+
+    public static JSONObject updateSuccess(String msg) {
+        return msg(MsgEnum.UPDATE_SUCCESS.getCode(), msg);
+    }
+
+    public static JSONObject updateError() {
+        return delSuccess(MsgEnum.UPDATE_ERROR.getMsg());
+    }
+
     public static JSONObject updateError(String msg) {
-        return msg(MsgEnum.UPDATE_ERROR.getCode(), msg);}
+        return msg(MsgEnum.UPDATE_ERROR.getCode(), msg);
+    }
+
     /**
      * 删除成功
      *
@@ -120,11 +130,12 @@ public class MsgUtils {
     public static JSONObject msg(int code, String tmpMsg, String msg) {
         msg = StringUtils.isBlank(msg) ? tmpMsg : msg;
         JSONObject jo = new JSONObject();
-        jo.put("data",new Msg(code, msg));
+        jo.put("data", new Msg(code, msg));
         return jo;
     }
+
     public static JSONObject error() {
-        return msg(0, "服务器异常", null);
+        return msg(MsgEnum.ERROR.getCode(), MsgEnum.ERROR.getMsg(), null);
     }
 
 }

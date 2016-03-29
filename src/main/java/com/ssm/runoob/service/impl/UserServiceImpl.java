@@ -5,6 +5,9 @@ import com.ssm.runoob.model.User;
 import com.ssm.runoob.service.UserService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +23,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @CacheEvict(key = "#id",value = "user")
     @Override
     public int deleteByPrimaryKey(Long id) {
         int i = userMapper.deleteByPrimaryKey(id);
@@ -30,7 +34,7 @@ public class UserServiceImpl implements UserService {
         }
         return i;
     }
-
+    @CachePut(key = "#record.id",value = "user")
     @Override
     public int insert(User record) {
         int i = userMapper.insert(record);
@@ -42,29 +46,28 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
+    @CachePut(key = "#record.id",value = "user")
     @Override
     public int insertSelective(User record) {
         return userMapper.insertSelective(record);
     }
 
+    @Cacheable(key = "#id",value = "user")
     @Override
     public User selectByPrimaryKey(Long id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
+    @CachePut(key = "#record.id",value = "user")
     @Override
     public int updateByPrimaryKeySelective(User record) {
         return userMapper.updateByPrimaryKeySelective(record);
     }
 
+    @CachePut(key = "#record.id",value = "user")
     @Override
     public int updateByPrimaryKey(User record) {
         return userMapper.updateByPrimaryKey(record);
-    }
-
-    @Override
-    public List<User> findByQuery(String q, int start, int end) {
-        return userMapper.findByQuery(q,start,end);
     }
 
     @Override
