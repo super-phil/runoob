@@ -65,5 +65,5 @@ public interface UserService {
 
     long countByQuery(String q);
 
-    Map<String,Integer> getIntervalData(int i);
+    Map<String,Object> getIntervalData(int i);
 }

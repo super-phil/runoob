@@ -63,5 +63,5 @@ public interface UserMapper {
 
     List<User> findByQueryAndOrderBy(@Param("q") String q, @Param("orderBy") String orderBy, @Param("start") int start, @Param("end") int end);
 
-    Map<String,Integer> getIntervalData(@Param("i") int i);
+    Map<String,Object> getIntervalData(@Param("i") int i);
 }

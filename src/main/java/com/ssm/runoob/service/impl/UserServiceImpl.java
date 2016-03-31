@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Map<String, Integer> getIntervalData(int i) {
+    public Map<String, Object> getIntervalData(int i) {
         return userMapper.getIntervalData(i);
     }
 }

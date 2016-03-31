@@ -57,11 +57,19 @@
                         </div>
                     </div>
                 </div>
-                <div id="container" class="panel-body">
-                    <%--yesy--%>
-                </div>
                 <div class="panel-body">
-                    <button class="set-title">yaxis-title</button>
+                    <div>
+                        <span>频率:</span>
+                        <select id="fqcy">
+                            <option value="5">5s</option>
+                            <option value="15">15s</option>
+                            <option value="30">30s</option>
+                            <option value="45">45s</option>
+                            <option value="60">60s</option>
+                        </select>
+                    </div>
+                    <div id="container" ></div>
+
                 </div>
             </div>
         </div>
@@ -99,9 +107,10 @@
 <script type="text/javascript">
     $(function () {
 
-        var interval = Number(50);
-        $('.set-title').click(function () {
-            interval = Number(50);
+        var interval = 5000;
+        $('#fqcy').change(function () {
+            interval = $("#fqcy").val()*1000;
+
         });
         $('#container').highcharts({
             chart: {
@@ -125,7 +134,7 @@
                                     series.addPoint([x, y], true, true);
                                 }
                             });
-                        }, interval*1000);
+                        }, interval);
                     }
                 }
             },

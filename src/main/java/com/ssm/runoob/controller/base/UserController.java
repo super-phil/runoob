@@ -8,6 +8,7 @@ import com.ssm.runoob.service.UserService;
 import com.ssm.runoob.util.MsgUtils;
 import org.apache.ibatis.annotations.Param;
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Phil on 2016/3/3.
@@ -83,34 +86,22 @@ public class UserController {
 
     /**
      * SELECT
-     DATE_FORMAT(create_time, '%h:%s') AS hs,
-     COUNT(id)
-     FROM
-     USER
-     WHERE DATE_SUB(NOW(), INTERVAL 5 SECOND  ) <= create_time
-     GROUP BY DATE_FORMAT(create_time, '%h%s') LIMIT 1;
+     * DATE_FORMAT(create_time, '%h:%s') AS hs,
+     * COUNT(id)
+     * FROM
+     * USER
+     * WHERE DATE_SUB(NOW(), INTERVAL 5 SECOND  ) <= create_time
+     * GROUP BY DATE_FORMAT(create_time, '%h%s') LIMIT 1;
+     *
      * @return
      */
     @ResponseBody
     @RequestMapping(value = "chart", method = RequestMethod.POST)
     public Object chart(@Param("interval") int interval) {
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        logger.debug("################:"+interval+"#####################");
-        Map<String, Integer> data = userService.getIntervalData(interval);
+//        Map<String, Object> data = userService.getIntervalData(interval);
+        Map<String, Object> data = new HashMap<>();
+        data.put("x", new DateTime().toString("HH:mm:ss"));
+        data.put("y", new Random().nextInt(99));
         return MsgUtils.success(data);
     }
 
