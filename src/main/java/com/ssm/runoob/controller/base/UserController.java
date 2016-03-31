@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Phil on 2016/3/3.
@@ -78,6 +79,39 @@ public class UserController {
         } else {
             return MsgUtils.delError();
         }
+    }
+
+    /**
+     * SELECT
+     DATE_FORMAT(create_time, '%h:%s') AS hs,
+     COUNT(id)
+     FROM
+     USER
+     WHERE DATE_SUB(NOW(), INTERVAL 5 SECOND  ) <= create_time
+     GROUP BY DATE_FORMAT(create_time, '%h%s') LIMIT 1;
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping(value = "chart", method = RequestMethod.POST)
+    public Object chart(@Param("interval") int interval) {
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        logger.debug("################:"+interval+"#####################");
+        Map<String, Integer> data = userService.getIntervalData(interval);
+        return MsgUtils.success(data);
     }
 
 }

@@ -133,9 +133,22 @@ public class MsgUtils {
         jo.put("data", new Msg(code, msg));
         return jo;
     }
+    /**
+     * @param code   状态值
+     * @param data   自定义提示 允许为空
+     * @return json
+     */
+    public static JSONObject msg(int code, Object data) {
+        JSONObject jo = new JSONObject();
+        jo.put("data", data);
+        return jo;
+    }
 
     public static JSONObject error() {
         return msg(MsgEnum.ERROR.getCode(), MsgEnum.ERROR.getMsg(), null);
     }
 
+    public static JSONObject success(Object data) {
+        return msg(MsgEnum.SUCCESS.getCode(),data );
+    }
 }

@@ -3,6 +3,7 @@ package com.ssm.runoob.service;
 import com.ssm.runoob.model.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Phil on 2016/2/25.
@@ -64,4 +65,5 @@ public interface UserService {
 
     long countByQuery(String q);
 
+    Map<String,Integer> getIntervalData(int i);
 }

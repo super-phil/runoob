@@ -11,6 +11,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Phil on 2016/2/25.
@@ -83,5 +84,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public long countByQuery(String q) {
         return userMapper.countByQuery(q);
+    }
+
+    @Override
+    public Map<String, Integer> getIntervalData(int i) {
+        return userMapper.getIntervalData(i);
     }
 }

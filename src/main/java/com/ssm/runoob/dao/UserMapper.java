@@ -4,6 +4,7 @@ import com.ssm.runoob.model.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UserMapper {
     /**
@@ -61,4 +62,6 @@ public interface UserMapper {
     long countByQuery(@Param("q") String q);
 
     List<User> findByQueryAndOrderBy(@Param("q") String q, @Param("orderBy") String orderBy, @Param("start") int start, @Param("end") int end);
+
+    Map<String,Integer> getIntervalData(@Param("i") int i);
 }
