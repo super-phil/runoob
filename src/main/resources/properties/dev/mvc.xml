@@ -124,7 +124,37 @@
     <mvc:resources mapping="/*.ico" location="/"/>
     <!--全局异常-->
     <bean class="com.ssm.runoob.exception.RunoobExceptionResolver"/>
+    <!--国际化-->
+    <!-- 定义国际化消息
+              说明:只会在servlet做出响应,所以加载信息应该放置在servlet中.
+       -->
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 
+        <!-- 其中basename用来指定properties文件的通用名
+                 如实例中的messages_en.properties,messages_ja.properties通用名都是messages
+         -->
+        <property name="basename" value="messages" />
+        <property name="defaultEncoding" value="UTF-8"/>
+        <property name="useCodeAsDefaultMessage" value="true" />
+
+    </bean>
+    <!-- 配置基于Session的处理,将提交上来的locale参数进行处理 -->
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+        <!-- 该属性可以不用配置 -->
+        <property name="defaultLocale" value="zh"/>
+    </bean>
+
+    <!-- 国际化请求拦截器处理 -->
+    <mvc:interceptors>
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+    </mvc:interceptors>
+    <!-- 基于Cookie的本地化解析器 -->
+    <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
+        <!--<property name="cookieMaxAge" value="604800"/>-->
+        <!--<property name="defaultLocale" value="zh"/>-->
+        <!--<property name="cookieName" value="Language"/>-->
+    <!--</bean>-->
+    <!--文件上传-->
     <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="104857600"/>
         <property name="maxInMemorySize" value="4096"/>

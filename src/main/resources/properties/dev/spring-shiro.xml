@@ -43,7 +43,7 @@
         <property name="filterChainDefinitions">
             <value>
                 /favicon.ico =anon
-                /test/**=perms["shiro"]
+                /test/shiro=perms["shiro"]
             </value>
         </property>
     </bean>

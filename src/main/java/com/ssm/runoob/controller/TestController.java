@@ -158,4 +158,12 @@ public class TestController {
 
         return "test/index";
     }
+
+    @RequestMapping(value = "messages", method = RequestMethod.GET)
+    public String messages() {
+
+        return "test/messages";
+    }
+
+
 }
