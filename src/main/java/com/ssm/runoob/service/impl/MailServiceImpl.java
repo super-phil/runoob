@@ -1,10 +1,8 @@
 package com.ssm.runoob.service.impl;
 
 import com.ssm.runoob.service.MailService;
-import com.ssm.runoob.util.ConfigUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -37,9 +35,11 @@ public class MailServiceImpl implements MailService {
 
     public void sendHtmlMail(String toAddress, String subject, String text) {
         MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        MimeMessageHelper mimeMessageHelper;
         try {
+            mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,"UTF-8");
             mimeMessageHelper.setFrom(javaMailSender.getUsername());
+//            mimeMessageHelper.s
             mimeMessageHelper.setTo(toAddress);
             mimeMessageHelper.setSubject(subject);
             mimeMessageHelper.setText("<div>\n" +
