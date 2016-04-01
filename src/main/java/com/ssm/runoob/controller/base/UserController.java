@@ -91,7 +91,6 @@ public class UserController {
      * FROM
      * USER
      * WHERE DATE_SUB(NOW(), INTERVAL 5 SECOND  ) <= create_time
-     * GROUP BY DATE_FORMAT(create_time, '%h%s') LIMIT 1;
      *
      * @return
      */
