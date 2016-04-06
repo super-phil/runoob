@@ -42,7 +42,8 @@
     <bean id="dynamicFilterChainDefinitions" class="com.ssm.runoob.shiro.DynamicFilterChainDefinitions">
         <property name="filterChainDefinitions">
             <value>
-                /test/**=perms["shiro"]
+                /favicon.ico =anon
+                /test/shiro=perms["shiro"]
             </value>
         </property>
     </bean>
