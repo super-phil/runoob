@@ -10,25 +10,24 @@ import org.springframework.stereotype.Service;
  */
 @Service("redisService")
 public class RedisServiceImpl<K,V> implements RedisService<K,V>  {
-    @Autowired
-    private RedisTemplate<K,V>  redisTemplate;
+
     @Override
     public void set(K k, V v) {
-        redisTemplate.opsForSet().add(k, v);
+
     }
 
     @Override
-    public Object get(Object o) {
+    public V get(K k) {
         return null;
     }
 
     @Override
-    public void del(Object o) {
+    public void del(K k) {
 
     }
 
     @Override
-    public boolean exists(Object o) {
+    public boolean exists(K k) {
         return false;
     }
 }

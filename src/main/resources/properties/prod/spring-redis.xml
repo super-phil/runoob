@@ -25,10 +25,10 @@
           class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
           destroy-method="destroy">
         <property name="hostName" value="${redis.host}" />
+        <property name="password" value="${redis.password}" />
         <property name="port" value="${redis.port}" />
         <property name="timeout" value="150000" />
         <property name="database" value="0" />
-        <property name="password" value="" />
         <property name="usePool" value="true" />
         <property name="poolConfig" ref="jedisPoolConfig" />
     </bean>
