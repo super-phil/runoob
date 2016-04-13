@@ -21,23 +21,23 @@
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="findByQuery" resultType="com.ssm.runoob.model.User">
-    SELECT <include refid="Base_Column_List"/> FROM user
+    SELECT <include refid="Base_Column_List"/> FROM USER
     <if test="q !=null">
       WHERE NAME LIKE '%${q}%' or mobile LIKE '%${q}%'
     </if>
     limit ${start},${end}
   </select>
   <select id="count" resultType="java.lang.Long">
-    SELECT COUNT(1) FROM user
+    SELECT COUNT(1) FROM USER
   </select>
   <select id="countByQuery" resultType="java.lang.Long">
-     SELECT COUNT(1) FROM user
+     SELECT COUNT(1) FROM USER
     <if test="q != null">
       WHERE NAME LIKE '%${q}%' or mobile LIKE '%${q}%'
     </if>
   </select>
   <select id="findByQueryAndOrderBy" resultType="com.ssm.runoob.model.User">
-    SELECT <include refid="Base_Column_List"/> FROM user
+    SELECT <include refid="Base_Column_List"/> FROM USER
     <if test="q !=null">
       WHERE NAME LIKE '%${q}%' or mobile LIKE '%${q}%'
     </if>
@@ -52,7 +52,7 @@
         DATE_FORMAT(create_time, '%H:%i:%s') AS x ,
         COUNT(id) AS y
         FROM
-        user
+        USER
         WHERE DATE_SUB(NOW(), INTERVAL ${i} SECOND) <= create_time;
      ]]>
 
@@ -71,11 +71,11 @@
     <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into user (name, pwd, status, 
-      mobile, email, create_time, 
+    insert into user (name, pwd, status,
+      mobile, email, create_time,
       update_time)
-    values (#{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
-      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT},
+      #{mobile,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.ssm.runoob.model.User" >
