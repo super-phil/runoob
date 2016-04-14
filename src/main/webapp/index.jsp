@@ -58,18 +58,17 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div>
-                        <span>频率:</span>
-                        <select id="fqcy">
-                            <option value="5">5s</option>
-                            <option value="15">15s</option>
-                            <option value="30">30s</option>
-                            <option value="45">45s</option>
-                            <option value="60">60s</option>
-                        </select>
-                    </div>
-                    <div id="container" ></div>
-
+                    <%--<div>--%>
+                        <%--<span>频率:</span>--%>
+                        <%--<select id="fqcy">--%>
+                            <%--<option value="5">5s</option>--%>
+                            <%--<option value="15">15s</option>--%>
+                            <%--<option value="30">30s</option>--%>
+                            <%--<option value="45">45s</option>--%>
+                            <%--<option value="60">60s</option>--%>
+                        <%--</select>--%>
+                    <%--</div>--%>
+                    <div id="container"></div>
                 </div>
             </div>
         </div>
@@ -106,11 +105,9 @@
 <script src="/assets/js/plugins/highcharts/exporting.js"></script>
 <script type="text/javascript">
     $(function () {
-
         var interval = 5000;
         $('#fqcy').change(function () {
-            interval = $("#fqcy").val()*1000;
-
+            interval = $("#fqcy").val() * 1000;
         });
         $('#container').highcharts({
             chart: {
@@ -123,8 +120,8 @@
                         setInterval(function () {
                             $.ajax({
                                 type: 'POST',
-                                url: "/user/chart",
-                                data:{"interval":interval},
+                                url: "/chart/ajax",
+                                data: {"interval": interval},
                                 dataType: 'json',
                                 success: function (result) {
                                     var x, y;
@@ -140,9 +137,9 @@
             },
             title: {
                 text: '<span>你好</span>',
-                style:{ "color": "red", "fontSize": "18px"},
+                style: {"color": "red", "fontSize": "18px"},
 
-                useHTML:true
+                useHTML: true
 
             },
             xAxis: {
