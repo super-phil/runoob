@@ -1,10 +1,13 @@
 package com.ssm.runoob.model;
 
+import java.io.Serializable;
+
 /**
  * 全局提示信息
  * Created by Phil on 2015/12/19.
  */
-public class Msg {
+public class Msg implements Serializable {
+    private static final long serialVersionUID = -7761970428777599005L;
     private int code;
     private String msg;
     private Object obj;

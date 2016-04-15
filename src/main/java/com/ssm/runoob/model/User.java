@@ -1,17 +1,22 @@
 package com.ssm.runoob.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
-    private static final long serialVersionUID = -6305517349569466735L;
+public class User {
     private Long id;
+
     private String name;
+
     private String pwd;
+
     private int status;
+
     private String mobile;
+
     private String email;
+
     private Date createTime;
+
     private Date updateTime;
 
     public Long getId() {
