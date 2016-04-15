@@ -28,7 +28,7 @@
     <![endif]-->
 </head>
 <body>
-#include("/nav.vm")
+    #include("/nav.vm")
 <div class="container sys-head">
     <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-10 ">
@@ -208,7 +208,7 @@
 <script>
     $(function () {
         var user_add_modal = $('#user-add-modal');
-        var user_edit_modal =  $('#user-edit-modal');
+        var user_edit_modal = $('#user-edit-modal');
 //        user_add_modal.modal({
 //            backdrop: true,
 //            show: false,
@@ -237,20 +237,24 @@
                 {"data": "mobile"},
                 {"data": "email"},
                 {"data": "status"},
-                {"data": "createTime"},
-                {"data": null, "searchable": false, "orderable": false}//不参与排序和查询
+                {
+                    "data": "createTime",
+                    "render": function (data, type, row) {
+                        return new Date(data).format('yyyy-MM-dd HH:mm:ss');
+                    }
+                },
+                {
+                    "data": null, "searchable": false, "orderable": false,
+                    "render": function (data, type, row) {
+                        return '<button class="btn-edit btn btn-xs btn-info" data-id="' + row.id + '">编辑</button> <button class="btn-del btn btn-xs btn-danger" data-id="' + row.id + '">删除</button>';
+                    }
+                }//不参与排序和查询
             ],
             "columnDefs": [{
-                "render": function (data, type, row) {
+                "render": function (data, type, row) {//渲染
                     return data + ' (' + row.status + ')';
                 },
                 "targets": 0//对第一行渲染
-            }, {
-                "targets": -1,
-                "render": function (data, type, row) {
-                    return '<button class="btn-edit btn btn-xs btn-info" data-id="' + row.id + '">编辑</button> <button class="btn-del btn btn-xs btn-danger" data-id="' + row.id + '">删除</button>';
-                }
-//                "defaultContent": "<button class='btn-edit btn btn-xs btn-info'>编辑</button> <button class='btn-del btn btn-xs btn-danger'>删除</button>"//添加按钮
             }],
             "initComplete": function () {
 //                var api = this.api();

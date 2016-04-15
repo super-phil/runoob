@@ -220,7 +220,6 @@
 //            keyboard: true
 //        });
 
-
         var table = $('#user-list').DataTable({
             "ajax": {
                 "url": "/user/index",

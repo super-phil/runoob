@@ -100,10 +100,10 @@ $(function () {
      */
     Date.prototype.format = function (fmt) {
         var o = {
-            "m+": this.getMonth() + 1, //月份
+            "M+": this.getMonth() + 1, //月份
             "d+": this.getDate(), //日
             "H+": this.getHours(), //小时
-            "M+": this.getMinutes(), //分
+            "m+": this.getMinutes(), //分
             "s+": this.getSeconds(), //秒
             "q+": Math.floor((this.getMonth() + 3) / 3), //季度
             "S": this.getMilliseconds() //毫秒
