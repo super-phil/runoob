@@ -6,6 +6,7 @@ import com.ssm.runoob.model.DTResponse;
 import com.ssm.runoob.model.User;
 import com.ssm.runoob.service.UserService;
 import com.ssm.runoob.util.MsgUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -36,10 +37,14 @@ public class UserController {
         List<User> list = userService.findByQueryAndOrderBy(dtRequest.getSearch(), dtRequest.getOrder(), dtRequest.getStart(), dtRequest.getLength());
         DTResponse<User> dtResponse = new DTResponse<>();
         dtResponse.setDraw(dtRequest.getDraw());
-        dtResponse.setRecordsTotal(userService.count());
-        dtResponse.setRecordsFiltered(userService.countByQuery(dtRequest.getSearch()));//有效数据
+        long count = userService.count();
+        dtResponse.setRecordsTotal(count);
+        if (StringUtils.isBlank(dtRequest.getSearch())) {
+            dtResponse.setRecordsFiltered(count);//有效数据
+        } else {
+            dtResponse.setRecordsFiltered(userService.countByQuery(dtRequest.getSearch()));//有效数据
+        }
         dtResponse.setData(list);
-        logger.debug("x");
         return JSON.toJSON(dtResponse);
     }
 

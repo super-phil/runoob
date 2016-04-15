@@ -66,4 +66,6 @@ public interface UserService {
     long countByQuery(String q);
 
     Map<String,Object> getIntervalData(int i);
+
+    User findByMobilePassword(String mobile, String password);
 }

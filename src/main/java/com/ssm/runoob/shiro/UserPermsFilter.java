@@ -63,7 +63,6 @@ public class UserPermsFilter extends AuthorizationFilter {
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws IOException {
 
         Subject subject = this.getSubject(request, response);
-
         if (subject.getPrincipal() == null) {
             if (isAjax(request)) {
                 writeJson(response);

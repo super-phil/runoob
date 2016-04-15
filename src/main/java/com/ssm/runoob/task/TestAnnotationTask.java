@@ -23,7 +23,7 @@ public class TestAnnotationTask {
     private static Random random = new Random();
     @Autowired
     private UserService userService;
-        @Scheduled(cron = "*/5 * * * * ?")
+        @Scheduled(cron = "15 * * * * ?")
 //    @Scheduled(cron = "0 5 11 * * ?") //
     public void reportCurrentTime() {
 //            for (int i = 0; i <random.nextInt(20) ; i++) {

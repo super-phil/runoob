@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    @CacheEvict(key = "#id",value = "user")
     @Override
     public int deleteByPrimaryKey(Long id) {
         int i = userMapper.deleteByPrimaryKey(id);
@@ -35,7 +34,7 @@ public class UserServiceImpl implements UserService {
         }
         return i;
     }
-    @CachePut(key = "#record.id",value = "user")
+
     @Override
     public int insert(User record) {
         int i = userMapper.insert(record);
@@ -47,25 +46,21 @@ public class UserServiceImpl implements UserService {
         return i;
     }
 
-    @CachePut(key = "#record.id",value = "user")
     @Override
     public int insertSelective(User record) {
         return userMapper.insertSelective(record);
     }
 
-    @Cacheable(key = "#id",value = "user")
     @Override
     public User selectByPrimaryKey(Long id) {
         return userMapper.selectByPrimaryKey(id);
     }
 
-    @CachePut(key = "#record.id",value = "user")
     @Override
     public int updateByPrimaryKeySelective(User record) {
         return userMapper.updateByPrimaryKeySelective(record);
     }
 
-    @CachePut(key = "#record.id",value = "user")
     @Override
     public int updateByPrimaryKey(User record) {
         return userMapper.updateByPrimaryKey(record);
@@ -89,5 +84,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, Object> getIntervalData(int i) {
         return userMapper.getIntervalData(i);
+    }
+
+    @Override
+    public User findByMobilePassword(String mobile, String password) {
+        return userMapper.findByMobilePassword(mobile,password);
     }
 }

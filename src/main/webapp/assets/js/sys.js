@@ -119,36 +119,36 @@ $(function () {
      * @param result
      * @param callback
      */
-    sys.tip = function (result,callback) {
+    sys.tip = function (result, callback) {
         if (result.data.code == 0) {
             swal({
                 title: result.data.msg,//提示消息
-                type:"success",//成功类型
+                type: "success",//成功类型
                 timer: 1500,//1.8秒后自动关闭
                 showConfirmButton: false//不显示确认按钮
             });
-            if(callback){
+            if (callback) {
                 callback();
             }
-        }else{
+        } else {
             swal({
                     title: result.data.msg,//提示消息
-                    type:"error"//成功类型
+                    type: "error"//成功类型
                 }
             );
         }
     };
     //确认弹窗
-    sys.confirm = function(title,callback){
+    sys.confirm = function (title, callback) {
         swal({
             title: title || "确认删除?",
             type: "warning",
             showCancelButton: true,
             confirmButtonColor: "#DD6B55",
             confirmButtonText: "确认",
-            cancelButtonText:"取消",
+            cancelButtonText: "取消",
             closeOnConfirm: false
-        }, function(){
+        }, function () {
             callback();
         });
     };
@@ -158,7 +158,7 @@ $(function () {
      * @param url
      * @param callback
      */
-    sys.submit = function(form,url,callback){
+    sys.submit = function (form, url, callback) {
         var data = $(form).serialize();//序列化表单
         $.ajax({
             type: 'POST',
@@ -166,7 +166,25 @@ $(function () {
             data: data,
             dataType: 'json',
             success: function (result) {
-                sys.tip(result,callback);
+                sys.tip(result, callback);
+            }
+        })
+    };
+    /**
+     * 提交表单
+     * @param form
+     * @param url
+     * @param callback
+     */
+    sys.submitNoTip = function (form, url, callback) {
+        var data = $(form).serialize();//序列化表单
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            dataType: 'json',
+            success: function (result) {
+                callback(result);
             }
         })
     };
@@ -174,14 +192,14 @@ $(function () {
      * 删除
      * @param id
      */
-    sys.del = function (url,id,callback) {
+    sys.del = function (url, id, callback) {
         $.ajax({
             type: 'POST',
             url: url,
-            data: {"id":id},
+            data: {"id": id},
             dataType: 'json',
             success: function (result) {
-                sys.tip(result,callback);
+                sys.tip(result, callback);
             }
         })
     };

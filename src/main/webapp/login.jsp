@@ -1,6 +1,95 @@
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--在移动设备浏览器上，通过为视口（viewport）设置 meta 属性为 user-scalable=no 可以禁用其缩放（zooming）功能。这样禁用缩放功能后，用户只能滚动屏幕，就能让你的网站看上去更像原生应用的感觉 width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no-->
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <!--让部分国产浏览器默认采用高速模式渲染页面 360浏览器支持-->
+    <meta name="renderer" content="webkit">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+    <title>首页</title>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="/assets/bootstrap/3.3.5/css/bootstrap.min.css">
+    <!--自定义 -->
+    <link rel="stylesheet" href="/assets/css/sys.css">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="/assets/js/html5shiv.min.js"></script>
+    <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            padding-top: 100px;
+            padding-bottom: 40px;
+            /*background-color: #eee;*/
+            background: url('/assets/images/bg/restaurant.png')
+        }
+
+        .form-login {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .form-login .form-login-heading {
+            text-align: center;
+        }
+
+        .form-login .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .form-login .checkbox {
+            font-weight: normal;
+        }
+
+        .form-login .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-login .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-login input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-login input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+    </style>
+</head>
 <body>
-<h2>Hello World!</h2>
-login.jsp
+<div class="container">
+    <form class="form-login" action="/login" method="post">
+        <h2 class="form-login-heading">Runoob</h2>
+        <c:if test="${msg !=null}">
+            <span style="color: red">${msg}</span>
+        </c:if>
+        <input type="text" name="mobile" class="form-control" value="${mobile}" placeholder="Mobile" required autofocus>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+        <input type="hidden" name="origin" value="${origin}">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    </form>
+</div> <!-- /container -->
 </body>
 </html>
