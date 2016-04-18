@@ -1,6 +1,9 @@
 package com.ssm.runoob.dao;
 
 import com.ssm.runoob.model.Role;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RoleMapper {
     /**
@@ -50,4 +53,10 @@ public interface RoleMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Role record);
+
+    List<Role> findByQueryAndOrderBy(@Param("search") String search, @Param("order") String order, @Param("start") int start, @Param("length") int length);
+
+    long count();
+
+    long countByQuery(@Param("search") String search);
 }
