@@ -11,7 +11,7 @@ public class Privilege {
 
     private String url;
 
-    private String desc;
+    private String remark;
 
     private Date createTime;
 
@@ -47,12 +47,12 @@ public class Privilege {
         this.url = url == null ? null : url.trim();
     }
 
-    public String getDesc() {
-        return desc;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc == null ? null : desc.trim();
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Date getCreateTime() {
