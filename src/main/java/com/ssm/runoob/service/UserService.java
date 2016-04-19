@@ -27,4 +27,7 @@ public interface UserService {
     Map<String, Object> getIntervalData(int i);
 
     User findByMobilePassword(String mobile, String password);
+
+    int insertAssign(Long uid, Long rid);
+    int removeAssign(Long uid);
 }

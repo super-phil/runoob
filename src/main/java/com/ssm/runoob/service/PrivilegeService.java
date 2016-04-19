@@ -19,4 +19,10 @@ public interface PrivilegeService {
     int updateByPrimaryKeySelective(Privilege privilege);
 
     int deleteByPrimaryKey(long id);
+
+    Privilege findByName(String pName);
+
+    List<Privilege> findByPID(long pid);
+
+
 }

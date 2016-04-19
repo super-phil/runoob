@@ -61,16 +61,12 @@
     <select id="getIntervalData" resultType="java.util.Map">
     <![CDATA[
 
-
-
      SELECT
         DATE_FORMAT(create_time, '%H:%i:%s') AS x ,
         COUNT(id) AS y
         FROM
         USER
         WHERE DATE_SUB(NOW(), INTERVAL ${i} SECOND) <= create_time;
-
-
 
         ]]>
 
@@ -83,16 +79,13 @@
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <![CDATA[
-
-
-
       delete from user
       where id = #{id,jdbcType=BIGINT}
-
-
-
         ]]>
   </delete>
+    <delete id="removeAssign">
+        delete from user_role where user_id=${uid}
+    </delete>
     <insert id="insert" parameterType="com.ssm.runoob.model.User">
         <!--
           WARNING - @mbggenerated
@@ -163,6 +156,9 @@
                 #{updateTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
+    </insert>
+    <insert id="insertAssign">
+        insert into user_role (user_id,role_id) values (${uid},${rid})
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.ssm.runoob.model.User">
         <!--

@@ -29,4 +29,7 @@ public interface UserMapper {
 
     User findByMobilePassword(@Param("mobile") String mobile, @Param("password") String password);
 
+    int insertAssign(@Param("uid") Long uid, @Param("rid") Long rid);
+
+    int removeAssign(@Param("uid") Long uid);
 }

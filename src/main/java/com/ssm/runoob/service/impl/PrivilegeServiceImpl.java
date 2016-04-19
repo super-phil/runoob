@@ -2,10 +2,12 @@ package com.ssm.runoob.service.impl;
 
 import com.ssm.runoob.dao.PrivilegeMapper;
 import com.ssm.runoob.model.Privilege;
+import com.ssm.runoob.model.TreeNode;
 import com.ssm.runoob.service.PrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,7 +35,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public int insert(Privilege privilege) {
-        return privilegeMapper.insert(privilege);
+        return privilegeMapper.insertSelective(privilege);
     }
 
     @Override
@@ -43,6 +45,18 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
     @Override
     public int deleteByPrimaryKey(long id) {
+        //删除关联关系
+        privilegeMapper.removeRPassignByPID(id);
         return privilegeMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Privilege findByName(String pName) {
+        return privilegeMapper.findByName(pName);
+    }
+
+    @Override
+    public List<Privilege> findByPID(long pid) {
+        return privilegeMapper.findByPID(pid);
     }
 }

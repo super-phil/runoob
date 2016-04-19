@@ -3,13 +3,12 @@ package com.ssm.runoob.service.impl;
 import com.ssm.runoob.dao.UserMapper;
 import com.ssm.runoob.model.User;
 import com.ssm.runoob.service.UserService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +25,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteByPrimaryKey(Long id) {
+        //删除user_role 关联关系
+        removeAssign(id);
         int i = userMapper.deleteByPrimaryKey(id);
         if (i > 0) {
             logger.debug("Del user to database success");
@@ -37,6 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int insert(User record) {
+        record.setPwd(DigestUtils.md5Hex(record.getPwd()));
         int i = userMapper.insert(record);
         if (i > 0) {
             logger.debug("Insert user to database success");
@@ -88,6 +90,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findByMobilePassword(String mobile, String password) {
-        return userMapper.findByMobilePassword(mobile,password);
+        password = DigestUtils.md5Hex(password);
+        return userMapper.findByMobilePassword(mobile, password);
     }
+
+    @Override
+    public int insertAssign(Long uid, Long rid) {
+        removeAssign(uid);//先删除 再增加
+        return userMapper.insertAssign(uid, rid);
+    }
+
+    @Override
+    public int removeAssign(Long uid) {
+        return userMapper.removeAssign(uid);
+    }
+
 }

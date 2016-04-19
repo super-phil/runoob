@@ -5,6 +5,7 @@ package com.ssm.runoob.enums;
  */
 public enum MsgEnum {
     ERROR(999, "服务器异常!"),
+    ILLEGALARGUMENT(998, "非法参数!"),
     SUCCESS(0, "服务器正常!"),
     ADD_ERROR(1, "添加失败！"),
     ADD_SUCCESS(0, "添加成功！"),
@@ -14,6 +15,7 @@ public enum MsgEnum {
     DEL_ERROR(1, "删除失败！"),
     UPDATE_SUCCESS(0, "修改成功！"),
     UPDATE_ERROR(1, "修改失败！");
+
 
 
     private int code;

@@ -47,6 +47,14 @@
         delete from role
         where id = #{id,jdbcType=BIGINT}
     </delete>
+    <delete id="removeRPAssignAllByRID">
+        delete from role_privilege
+        where role_id = ${rid}
+    </delete>
+    <delete id="removeURAssignAllByRID">
+        delete from user_role
+        where role_id = ${rid}
+    </delete>
     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
         <!--
           WARNING - @mbggenerated
@@ -56,6 +64,11 @@
         <include refid="Base_Column_List"/>
         from role
         where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="getAll" resultType="com.ssm.runoob.model.Role">
+        select
+        <include refid="Base_Column_List"/>
+        from role
     </select>
     <insert id="insert" parameterType="com.ssm.runoob.model.Role">
         <!--
@@ -101,6 +114,13 @@
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
         </trim>
+    </insert>
+    <insert id="insertAssign">
+        insert into role_privilege (role_id, privilege_id)
+        values
+        <foreach collection="rps" item="rp" open="(" separator="),(" close=")">
+        #{rp.roleId}, #{rp.privilegeId}
+        </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.ssm.runoob.model.Role">
         <!--

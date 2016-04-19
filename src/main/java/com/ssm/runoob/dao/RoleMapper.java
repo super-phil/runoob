@@ -1,6 +1,7 @@
 package com.ssm.runoob.dao;
 
 import com.ssm.runoob.model.Role;
+import com.ssm.runoob.model.RolePrivilege;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -59,4 +60,12 @@ public interface RoleMapper {
     long count();
 
     long countByQuery(@Param("search") String search);
+
+    int insertAssign(@Param("rps") List<RolePrivilege> rps);
+
+    int removeRPAssignAllByRID(@Param("rid") Long rid);
+
+    int removeURAssignAllByRID(@Param("rid") Long rid);
+
+    List<Role> getAll();
 }

@@ -1,18 +1,20 @@
-package com.ssm.runoob.controller;
+package com.ssm.runoob.controller.base;
 
 import com.alibaba.fastjson.JSON;
-import com.ssm.runoob.controller.base.UserController;
 import com.ssm.runoob.model.DTRequest;
 import com.ssm.runoob.model.DTResponse;
 import com.ssm.runoob.model.Privilege;
+import com.ssm.runoob.model.TreeNode;
 import com.ssm.runoob.service.PrivilegeService;
-import com.ssm.runoob.util.MsgUtils;
+import com.ssm.runoob.service.TreeNodeService;
+import com.ssm.runoob.util.ResultUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,6 +25,9 @@ import java.util.List;
 public class PrivilegeController {
     @Autowired
     private PrivilegeService privilegeService;
+
+    @Autowired
+    private TreeNodeService treeNodeService;
     private static final Logger logger = Logger.getLogger(UserController.class);
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
@@ -49,12 +54,17 @@ public class PrivilegeController {
 
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
-    public Object insert(Privilege privilege) {
+    public Object insert(Privilege privilege, @RequestParam(value = "pName", required = false) String pName) {
+
+        if (StringUtils.isNotBlank(pName)) {
+            Privilege byName = privilegeService.findByName(pName);
+            privilege.setParentId(byName.getId());
+        }
         int v = privilegeService.insert(privilege);
         if (v > 0) {
-            return MsgUtils.addSuccess();
+            return ResultUtils.addSuccess();
         } else {
-            return MsgUtils.addError();
+            return ResultUtils.addError();
         }
     }
 
@@ -63,9 +73,9 @@ public class PrivilegeController {
     public Object update(Privilege privilege) {
         int v = privilegeService.updateByPrimaryKeySelective(privilege);
         if (v > 0) {
-            return MsgUtils.updateSuccess();
+            return ResultUtils.updateSuccess();
         } else {
-            return MsgUtils.updateError();
+            return ResultUtils.updateError();
         }
     }
 
@@ -74,9 +84,18 @@ public class PrivilegeController {
     public Object del(@RequestParam("id") long id) {
         int v = privilegeService.deleteByPrimaryKey(id);
         if (v > 0) {
-            return MsgUtils.delSuccess();
+            return ResultUtils.delSuccess();
         } else {
-            return MsgUtils.delError();
+            return ResultUtils.delError();
         }
     }
+
+    @ResponseBody
+    @RequestMapping(value = "tree", method = RequestMethod.POST)
+    public Object tree(@RequestParam(value = "id", required = false) Long id) {
+        List<TreeNode> list = new ArrayList<>();
+        return ResultUtils.data(treeNodeService.getTree(0, list));
+    }
+
+
 }

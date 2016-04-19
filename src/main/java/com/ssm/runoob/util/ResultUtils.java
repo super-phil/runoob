@@ -8,7 +8,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * Created by Phil on 2015/12/19.
  */
-public class MsgUtils {
+public class ResultUtils {
     public static JSONObject updateSuccess() {
         return delSuccess(MsgEnum.UPDATE_SUCCESS.getMsg());
     }
@@ -112,12 +112,17 @@ public class MsgUtils {
         return msg(MsgEnum.LOGIN_ERROR.getCode(), MsgEnum.LOGIN_ERROR.getMsg());
     }
 
+
+    public static JSONObject IllegalArgumentError() {
+        return msg(MsgEnum.ILLEGALARGUMENT.getCode(), MsgEnum.ILLEGALARGUMENT.getMsg());
+    }
+
     /**
      * @param code   状态值
      * @param tmpMsg 模板提示
      * @return json
      */
-    public static JSONObject msg(int code, String tmpMsg) {
+    private static JSONObject msg(int code, String tmpMsg) {
         return msg(code, tmpMsg, null);
     }
 
@@ -127,20 +132,21 @@ public class MsgUtils {
      * @param msg    自定义提示 允许为空
      * @return json
      */
-    public static JSONObject msg(int code, String tmpMsg, String msg) {
+    private static JSONObject msg(int code, String tmpMsg, String msg) {
         msg = StringUtils.isBlank(msg) ? tmpMsg : msg;
         JSONObject jo = new JSONObject();
         jo.put("data", new Msg(code, msg));
         return jo;
     }
+
     /**
-     * @param code   状态值
-     * @param data   自定义提示 允许为空
+     * @param code 状态值
+     * @param data 自定义提示 允许为空
      * @return json
      */
-    public static JSONObject msg(int code, Object data) {
+    public static JSONObject data(Object data) {
         JSONObject jo = new JSONObject();
-        jo.put("data", data);
+        jo.put("data", new Msg(MsgEnum.SUCCESS.getCode(), data));
         return jo;
     }
 
@@ -148,7 +154,15 @@ public class MsgUtils {
         return msg(MsgEnum.ERROR.getCode(), MsgEnum.ERROR.getMsg(), null);
     }
 
+    public static JSONObject error(String msg) {
+        return msg(MsgEnum.ERROR.getCode(), msg);
+    }
+
+    public static JSONObject success(String msg) {
+        return msg(MsgEnum.SUCCESS.getCode(), msg);
+    }
+
     public static JSONObject success(Object data) {
-        return msg(MsgEnum.SUCCESS.getCode(),data );
+        return data(data);
     }
 }

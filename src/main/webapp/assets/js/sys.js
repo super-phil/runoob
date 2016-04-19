@@ -172,6 +172,25 @@ $(function () {
     };
     /**
      * 提交表单
+     * @param data
+     * @param url
+     * @param callback
+     */
+    sys.submitData = function (data, url, callback) {
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (result) {
+                sys.tip(result, callback);
+            }
+        })
+    };
+
+    /**
+     * 提交表单
      * @param form
      * @param url
      * @param callback

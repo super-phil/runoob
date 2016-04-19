@@ -1,18 +1,21 @@
 package com.ssm.runoob.controller.base;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.ssm.runoob.model.DTRequest;
 import com.ssm.runoob.model.DTResponse;
 import com.ssm.runoob.model.Role;
-import com.ssm.runoob.model.User;
+import com.ssm.runoob.model.RolePrivilege;
 import com.ssm.runoob.service.RoleService;
-import com.ssm.runoob.util.MsgUtils;
+import com.ssm.runoob.util.ResultUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,11 +28,22 @@ public class RoleController {
     private RoleService roleService;
     private static final Logger logger = Logger.getLogger(UserController.class);
 
+    /**
+     * Index string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
         return "base/role_list";
     }
 
+    /**
+     * List object.
+     *
+     * @param dtRequest the dt request
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "index", method = RequestMethod.POST)
     public Object list(@RequestBody DTRequest dtRequest) {
@@ -47,36 +61,95 @@ public class RoleController {
         return JSON.toJSON(dtResponse);
     }
 
+    /**
+     * Insert object.
+     *
+     * @param role the role
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public Object insert(Role role) {
         int v = roleService.insert(role);
         if (v > 0) {
-            return MsgUtils.addSuccess();
+            return ResultUtils.addSuccess();
         } else {
-            return MsgUtils.addError();
+            return ResultUtils.addError();
         }
     }
 
+    /**
+     * Update object.
+     *
+     * @param role the role
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Object update(Role role) {
         int v = roleService.updateByPrimaryKeySelective(role);
         if (v > 0) {
-            return MsgUtils.updateSuccess();
+            return ResultUtils.updateSuccess();
         } else {
-            return MsgUtils.updateError();
+            return ResultUtils.updateError();
         }
     }
 
+    /**
+     * Del object.
+     *
+     * @param id the id
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "del", method = RequestMethod.POST)
     public Object del(@RequestParam("id") long id) {
         int v = roleService.deleteByPrimaryKey(id);
         if (v > 0) {
-            return MsgUtils.delSuccess();
+            return ResultUtils.delSuccess();
         } else {
-            return MsgUtils.delError();
+            return ResultUtils.delError();
         }
     }
+
+    /**
+     * 给角色分配权限
+     * Assign object.
+     *
+     * @param obj 权限ids
+     * @return object
+     */
+    @ResponseBody
+    @RequestMapping(value = "assign", method = RequestMethod.POST)
+    public Object assign(@RequestBody JSONObject obj) {
+        //如果obj
+        Long rid = obj.getLong("rid");
+        logger.debug("rid" + rid);
+        JSONArray ids = obj.getJSONArray("pids");
+        Integer[] pids = ids.toArray(new Integer[ids.size()]);
+        logger.debug("pids" + pids);
+
+        if (null == rid) return ResultUtils.IllegalArgumentError();
+        //如果 数组为0长度为0 的话就是全部删除
+        //这里采用删除后重新插入的策略
+        int v;
+        if (pids.length == 0) {
+            v = roleService.removeAssignAllByRID(rid);
+        } else {
+            List<RolePrivilege> rps = new ArrayList<>();
+            for (Integer pid : pids) {
+                RolePrivilege rp = new RolePrivilege();
+                rp.setRoleId(rid);
+                rp.setPrivilegeId(Long.valueOf(pid));
+                rps.add(rp);
+            }
+            v = roleService.insertAssign(rps);
+        }
+        if (v > 0) {
+            return ResultUtils.success("分配成功!");
+        } else {
+            return ResultUtils.error("分配失败!");
+        }
+    }
+
 }

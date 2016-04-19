@@ -52,6 +52,16 @@
             WHERE name LIKE '%${search}%'
         </if>
     </select>
+    <select id="findByName" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from privilege where name='${pName}'
+    </select>
+    <select id="findByPID" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from privilege where parent_id=${pid}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         <!--
           WARNING - @mbggenerated
@@ -59,6 +69,9 @@
         -->
         delete from privilege
         where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <delete id="removeRPassignByPID">
+        delete from role_privilege where privilege_id=${id}
     </delete>
     <insert id="insert" parameterType="com.ssm.runoob.model.Privilege">
         <!--

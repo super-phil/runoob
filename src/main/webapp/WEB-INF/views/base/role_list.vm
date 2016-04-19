@@ -15,9 +15,12 @@
     <!--表格-->
     <link rel="stylesheet" href="/assets/js/plugins/dataTables/dataTables.bootstrap.min.css">
     <!--弹窗-->
-    <link rel="stylesheet" type="text/css" href="/assets/js/plugins/sweetalert/sweetalert.css">
+    <link rel="stylesheet" href="/assets/js/plugins/sweetalert/sweetalert.css">
     <!-- 验证-->
-    <link rel="stylesheet" type="text/css" href="/assets/js/plugins/nice-validator/jquery.validator.css">
+    <link rel="stylesheet" href="/assets/js/plugins/nice-validator/jquery.validator.css">
+    <!--ztree-->
+    <link rel="stylesheet" href="/assets/js/plugins/ztree/css/metroStyle/metroStyle.css">
+
     <!--自定义 -->
     <link rel="stylesheet" href="/assets/css/sys.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -96,7 +99,7 @@
 </div>
 <!-- /.container -->
 <!-- .add modal -->
-<div class="modal fade" id="bean-add-modal">
+<div class="modal fade" id="add-modal">
     <div class="modal-dialog">
         <div class="modal-content span12">
             <div class="modal-header">
@@ -104,7 +107,7 @@
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">添加角色</h4>
             </div>
-            <form id="bean-add-form" class="form-horizontal" method="post" autocomplete="off">
+            <form id="add-form" class="form-horizontal" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="inputName3" class="col-sm-2 control-label">角色名称</label>
@@ -122,7 +125,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger">清空</button>
-                    <button type="button" class="bean-add-form-submit btn btn-primary">提交</button>
+                    <button type="button" class="btn-add-form-submit btn btn-primary">提交</button>
                 </div>
             </form>
         </div>
@@ -131,7 +134,7 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.add modal -->
-<div class="modal fade" id="bean-edit-modal">
+<div class="modal fade" id="edit-modal">
     <div class="modal-dialog">
         <div class="modal-content span12">
             <div class="modal-header">
@@ -139,7 +142,7 @@
                         aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">编辑角色</h4>
             </div>
-            <form id="bean-edit-form" class="form-horizontal" method="post" autocomplete="off">
+            <form id="edit-form" class="form-horizontal" method="post" autocomplete="off">
                 <div class="modal-body">
                     <input type="hidden" name="id"> <!--- 表单隐藏域 -->
                     <div class="form-group">
@@ -157,7 +160,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-danger">清空</button>
-                    <button type="button" class="bean-edit-form-submit btn btn-primary">提交</button>
+                    <button type="button" class="btn-edit-form-submit btn btn-primary">提交</button>
                 </div>
             </form>
         </div>
@@ -165,6 +168,33 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="assign-modal">
+    <div class="modal-dialog">
+        <div class="modal-content span12">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">分配权限</h4>
+            </div>
+            <form id="assign-form" class="form-horizontal" method="post" autocomplete="off">
+                <input type="hidden" name="id">
+                <div class="modal-body">
+                    <div style="width:250px;height:360px;overflow:auto;">
+                        <ul id="tree" class="ztree"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-assign-form-cancel btn btn-danger">清空</button>
+                    <button type="button" class="btn-assign-form-submit btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!--表格-->
@@ -175,25 +205,27 @@
 <!--验证-->
 <script src="/assets/js/plugins/nice-validator/jquery.validator.min.js"></script>
 <script src="/assets/js/plugins/nice-validator/zh-CN.js"></script>
+<!--ztree-->
+<script src="/assets/js/plugins/ztree/jquery.ztree.all.min.js"></script>
 <!--自定义-->
 <script src="/assets/js/sys.js"></script>
 
 
 <script>
     $(function () {
-        var bean_add_modal = $('#bean-add-modal');
-        var bean_edit_modal = $('#bean-edit-modal');
-//        bean_add_modal.modal({
+        var add_modal = $('#add-modal');
+        var edit_modal = $('#edit-modal');
+        var assign_modal = $('#assign-modal');
+//        add_modal.modal({
 //            backdrop: true,
 //            show: false,
 //            keyboard: true
 //        });
-//        bean_edit_modal.modal({
+//        edit_modal.modal({
 //            backdrop: true,
 //            show: false,
 //            keyboard: true
 //        });
-
         var table = $('#data-list').DataTable({
             "ajax": {
                 "url": "/role/index",
@@ -207,16 +239,18 @@
             "columns": [
                 {"data": "id", "searchable": false},
                 {"data": "name"},
-                {"data": "createTime","render" :function (data, type, row) {
+                {
+                    "data": "createTime", "render": function (data, type, row) {
                     return new Date(data).format("yyyy-MM-dd HH:mm:ss")
-                }},
+                }
+                },
                 {"data": "remark"},
                 {"data": null, "searchable": false, "orderable": false}//不参与排序和查询
             ],
             "columnDefs": [{
                 "targets": -1,
                 "render": function (data, type, row) {
-                    return '<button class="btn-edit btn btn-xs btn-info" data-id="' + row.id + '">编辑</button> <button class="btn-del btn btn-xs btn-danger" data-id="' + row.id + '">删除</button>';
+                    return '<button class="btn-assign btn btn-xs btn-success" data-id="' + row.id + '">分配权限</button> <button class="btn-edit btn btn-xs btn-info" data-id="' + row.id + '">编辑</button> <button class="btn-del btn btn-xs btn-danger" data-id="' + row.id + '">删除</button>';
                 }
 //                "defaultContent": "<button class='btn-edit btn btn-xs btn-info'>编辑</button> <button class='btn-del btn btn-xs btn-danger'>删除</button>"//添加按钮
             }],
@@ -231,7 +265,7 @@
             table.search(this.value).draw();
         });
 
-        var bean_add_form = $('#bean-add-form');
+        var bean_add_form = $('#add-form');
 
         bean_add_form.validator({
             theme: "simple_top",
@@ -249,14 +283,14 @@
                 //表单验证通过，提交表单到服务器
                 sys.submit(form, "/role/insert", function () {
                     table.ajax.reload();
-                    bean_add_modal.modal("hide");
+                    add_modal.modal("hide");
                 });
             }
-        }).on('click', '.bean-add-form-submit', function (e) {
+        }).on('click', '.btn-add-form-submit', function (e) {
             $(e.delegateTarget).trigger("validate");
         });
 
-        var bean_edit_form = $('#bean-edit-form');
+        var bean_edit_form = $('#edit-form');
         bean_edit_form.validator({
             theme: "simple_top",
             fields: {
@@ -273,31 +307,84 @@
                 //表单验证通过，提交表单到服务器
                 sys.submit(form, "/role/update", function () {
                     table.ajax.reload();
-                    bean_edit_modal.modal("hide");
+                    edit_modal.modal("hide");
                 });
             }
-        }).on('click', '.bean-edit-form-submit', function (e) {
+        }).on('click', '.btn-edit-form-submit', function (e) {
             $(e.delegateTarget).trigger("validate");
         });
         //添加
         $('.btn-add').click(function () {
-            bean_add_modal.modal("show");
+            add_modal.modal("show");
+        });
+        function getTree() {
+            return $.fn.zTree.getZTreeObj("tree");
+        }
+
+        //单机打开节点
+        function oneClick(e, treeId, treeNode) {
+            getTree().expandNode(treeNode);
+        }
+        $('.btn-assign-form-cancel').click(function () {
+            getTree().checkAllNodes(false);
+        })
+        $('.btn-assign-form-submit').click(function () {
+            var trees = getTree().getCheckedNodes();
+            var data = [];
+            $.each(trees, function (index) {
+                data.push(trees[index].id);
+            });
+            var rid = $('#assign-form input[name="id"]').val();
+            sys.submitData(JSON.stringify({"rid": rid, "pids": data}), "/role/assign", function () {
+                assign_modal.modal("hide");
+            });
+        });
+
+        //分配权限
+        $(document).on('click', '.btn-assign', function () {
+            //$.fn.zTree.init($("#tree"), setting);
+            var _this = $(this);
+//
+            $('#assign-form input[name="id"]').val(_this.data('id'));
+            var setting = {
+                view: {
+                    dblClickExpand: false
+                },
+                callback: {
+                    onClick: oneClick//单击事件重写
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                check: {
+                    enable: true,
+                    chkStyle: "checkbox",
+                    chkboxType: {"Y": "ps", "N": "ps"}
+                }
+            };
+            $.ajax({
+                type: 'POST',
+                url: "/privilege/tree",
+//                data: {"id": id},
+                dataType: 'json',
+                success: function (result) {
+                    $.fn.zTree.init($("#tree"), setting, result.data.obj);
+                    assign_modal.modal("show");
+                }
+            })
         });
         //编辑
         $(document).on('click', '.btn-edit', function () {
             var _this = $(this);
             var _tr = _this.parent().parent()[0];
-            console.info(_tr);
             var data = table.row(_tr).data();
-            console.info(data);
-
             for (var obj in data) {
-                $('#bean-edit-form input[name=' + obj + ']').val(data[obj]);
-                $('#bean-edit-form textarea[name=' + obj + ']').text(data[obj]);
-
-                console.info(obj);
+                $('#edit-form input[name=' + obj + ']').val(data[obj]);
+                $('#edit-form textarea[name=' + obj + ']').text(data[obj]);
             }
-            bean_edit_modal.modal("show");
+            edit_modal.modal("show");
         });
         //删除
         $(document).on('click', '.btn-del', function () {
@@ -309,7 +396,8 @@
                 })
             });
         });
-    });
+    })
+    ;
 </script>
 </body>
 </html>

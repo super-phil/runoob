@@ -20,6 +20,11 @@ public class Msg implements Serializable {
         this.msg = msg;
     }
 
+    public Msg(int code, Object obj) {
+        this.code = code;
+        this.obj = obj;
+    }
+
     public Object getObj() {
         return obj;
     }

@@ -1,6 +1,7 @@
 package com.ssm.runoob.service;
 
 import com.ssm.runoob.model.Role;
+import com.ssm.runoob.model.RolePrivilege;
 
 import java.util.List;
 
@@ -19,4 +20,10 @@ public interface RoleService {
     int updateByPrimaryKeySelective(Role role);
 
     int deleteByPrimaryKey(long id);
+
+    int insertAssign(List<RolePrivilege> list);
+
+    int removeAssignAllByRID(Long rid);
+
+    List<Role> getAll();
 }

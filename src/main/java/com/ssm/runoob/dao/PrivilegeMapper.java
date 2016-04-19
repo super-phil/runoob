@@ -59,4 +59,10 @@ public interface PrivilegeMapper {
     long count();
 
     long countByQuery(@Param("search") String search);
+
+    Privilege findByName(@Param("pName") String pName);
+
+    List<Privilege> findByPID(@Param("pid") long pid);
+
+    int removeRPassignByPID(@Param("id") long id);
 }

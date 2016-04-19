@@ -1,6 +1,6 @@
 package com.ssm.runoob.controller.base;
 
-import com.ssm.runoob.util.MsgUtils;
+import com.ssm.runoob.util.ResultUtils;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +37,6 @@ public class ChartController {
         Map<String, Object> data = new HashMap<>();
         data.put("x", new DateTime().toString("HH:mm:ss"));
         data.put("y", new Random().nextInt(99));
-        return MsgUtils.success(data);
+        return ResultUtils.success(data);
     }
 }

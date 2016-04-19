@@ -1,15 +1,19 @@
 package com.ssm.runoob.controller.base;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.ssm.runoob.model.DTRequest;
 import com.ssm.runoob.model.DTResponse;
+import com.ssm.runoob.model.Role;
 import com.ssm.runoob.model.User;
+import com.ssm.runoob.service.RoleService;
 import com.ssm.runoob.service.UserService;
-import com.ssm.runoob.util.MsgUtils;
+import com.ssm.runoob.util.ResultUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,10 +28,14 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private RoleService roleService;
     private static final Logger logger = Logger.getLogger(UserController.class);
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String index() {
+    public String index(Model model) {
+        List<Role> roles = roleService.getAll();
+        model.addAttribute("roles", roles);
         return "base/user_list";
     }
 
@@ -53,9 +61,9 @@ public class UserController {
     public Object insert(User user) {
         int v = userService.insert(user);
         if (v > 0) {
-            return MsgUtils.addSuccess();
+            return ResultUtils.addSuccess();
         } else {
-            return MsgUtils.addError();
+            return ResultUtils.addError();
         }
     }
 
@@ -64,9 +72,9 @@ public class UserController {
     public Object update(User user) {
         int v = userService.updateByPrimaryKeySelective(user);
         if (v > 0) {
-            return MsgUtils.updateSuccess();
+            return ResultUtils.updateSuccess();
         } else {
-            return MsgUtils.updateError();
+            return ResultUtils.updateError();
         }
     }
 
@@ -75,9 +83,23 @@ public class UserController {
     public Object del(@RequestParam("id") long id) {
         int v = userService.deleteByPrimaryKey(id);
         if (v > 0) {
-            return MsgUtils.delSuccess();
+            return ResultUtils.delSuccess();
         } else {
-            return MsgUtils.delError();
+            return ResultUtils.delError();
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "assign", method = RequestMethod.POST)
+    public Object assign(@RequestBody JSONObject obj) {
+        Long uid = obj.getLong("uid");
+        Long rid = obj.getLong("rid");
+        if (null == uid || null == rid) return ResultUtils.IllegalArgumentError();
+        int v = userService.insertAssign(uid, rid);
+        if (v > 0) {
+            return ResultUtils.success("分配成功!");
+        } else {
+            return ResultUtils.error("分配失败!");
         }
     }
 

@@ -18,6 +18,8 @@
     <link rel="stylesheet" type="text/css" href="/assets/js/plugins/sweetalert/sweetalert.css">
     <!-- 验证-->
     <link rel="stylesheet" type="text/css" href="/assets/js/plugins/nice-validator/jquery.validator.css">
+    <!--ztree-->
+    <link rel="stylesheet" href="/assets/js/plugins/ztree/css/metroStyle/metroStyle.css">
     <!--自定义 -->
     <link rel="stylesheet" href="/assets/css/sys.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -56,7 +58,7 @@
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>权限名称</th>
+                            <th>菜单名称</th>
                             <th>url</th>
                             <th>备注</th>
                             <th>创建时间</th>
@@ -108,8 +110,24 @@
             <form id="bean-add-form" class="form-horizontal" method="post" autocomplete="off">
                 <div class="modal-body">
                     <div class="form-group">
+                        <label for="input0" class="col-sm-2 control-label">上级菜单</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input type="text" class="pName form-control" id="input0" name="pName" placeholder="上级菜单,没有可以为空" readonly>
+                                <div class="input-group-addon"> <span class="menu-select">选择</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group menuContent" style="display:none;">
+                        <label class="col-sm-2" ></label>
+                        <div class="col-sm-10" ">
+                            <div style="height: 100px; overflow: auto">
+                                <ul id="treeDemo" class="ztree"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="input1" class="col-sm-2 control-label">权限名称</label>
-
                         <div class="col-sm-10">
                             <input type="text" class="form-control" id="input1" name="name" placeholder="权限名称">
                         </div>
@@ -124,7 +142,8 @@
                     <div class="form-group">
                         <label for="input3" class="col-sm-2 control-label">备注</label>
                         <div class="col-sm-10">
-                            <textarea class="form-control" name="remark" id="input3" rows="3" placeholder="备注"></textarea>
+                            <textarea class="form-control" name="remark" id="input3" rows="3"
+                                      placeholder="备注"></textarea>
                         </div>
                     </div>
                 </div>
@@ -148,25 +167,27 @@
                 <h4 class="modal-title">编辑权限</h4>
             </div>
             <form id="bean-edit-form" class="form-horizontal" method="post" autocomplete="off">
+                <div class="modal-body">
                     <input type="hidden" name="id"> <!--- 表单隐藏域 -->
-                <div class="form-group">
-                    <label for="input1" class="col-sm-2 control-label">权限名称</label>
-
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input1" name="name" placeholder="权限名称">
+                    <div class="form-group">
+                        <label for="input1" class="col-sm-2 control-label">权限名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="input1" name="name" placeholder="权限名称">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="input2" class="col-sm-2 control-label">URI</label>
+                    <div class="form-group">
+                        <label for="input2" class="col-sm-2 control-label">URI</label>
 
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="input2" name="url" placeholder="URI">
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="input2" name="url" placeholder="URI">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="input3" class="col-sm-2 control-label">备注</label>
-                    <div class="col-sm-10">
-                        <textarea class="form-control" name="remark" id="input3" rows="3" placeholder="备注"></textarea>
+                    <div class="form-group">
+                        <label for="input3" class="col-sm-2 control-label">备注</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="remark" id="input3" rows="3"
+                                      placeholder="备注"></textarea>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -189,6 +210,8 @@
 <!--验证-->
 <script src="/assets/js/plugins/nice-validator/jquery.validator.min.js"></script>
 <script src="/assets/js/plugins/nice-validator/zh-CN.js"></script>
+<!--ztree-->
+<script src="/assets/js/plugins/ztree/jquery.ztree.all.min.js"></script>
 <!--自定义-->
 <script src="/assets/js/sys.js"></script>
 
@@ -223,9 +246,11 @@
                 {"data": "name"},
                 {"data": "url"},
                 {"data": "remark"},
-                {"data": "createTime","render" :function (data, type, row) {
+                {
+                    "data": "createTime", "render": function (data, type, row) {
                     return new Date(data).format("yyyy-MM-dd HH:mm:ss")
-                }},
+                }
+                },
 
                 {"data": null, "searchable": false, "orderable": false}//不参与排序和查询
             ],
@@ -266,6 +291,7 @@
                 sys.submit(form, "/privilege/insert", function () {
                     table.ajax.reload();
                     bean_add_modal.modal("hide");
+                    hideMenu();//关闭树列表
                 });
             }
         }).on('click', '.bean-add-form-submit', function (e) {
@@ -325,6 +351,41 @@
                 })
             });
         });
+
+        $('.menu-select').click(function () {
+            var setting = {
+                view: {
+                    dblClickExpand: false,
+                    showLine: true
+                },
+                callback: {
+                    onClick: function (e, treeId, treeNode) {
+                        $(".pName").val(treeNode.name);
+                    }
+                },
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                }
+            };
+            $.ajax({
+                type: 'POST',
+                url: "/privilege/tree",
+//                data: {"id": id},
+                dataType: 'json',
+                success: function (result) {
+                    $.fn.zTree.init($("#treeDemo"), setting, result.data.obj);
+                    showMenu();
+                }
+            })
+        });
+        function showMenu() {
+            $('.menuContent').show();
+        }
+        function hideMenu() {
+            $('.menuContent').hide();
+        }
     });
 </script>
 </body>
