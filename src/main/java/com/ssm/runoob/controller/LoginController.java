@@ -1,6 +1,5 @@
 package com.ssm.runoob.controller;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -28,7 +27,6 @@ public class LoginController {
     }
 
 
-
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public Object login(
             @RequestParam(value = "mobile") String mobile,
@@ -43,12 +41,13 @@ public class LoginController {
 
         try {
             subject.login(authenticationToken);
+            request.getSession().setAttribute("user", subject.getPrincipal());//登陆成功存session
             SavedRequest savedRequest = WebUtils.getSavedRequest(request);//如果是未登录 点链接进来的 (也就是上次访问的地址)
-            if (null !=savedRequest) {
+            if (null != savedRequest) {
                 String requestURI = savedRequest.getRequestURI();
                 return "redirect:" + requestURI;//重定向上次访问的页面
             } else {
-                return "index";
+                return "redirect:/index";
             }
         } catch (AuthenticationException e) {
             e.printStackTrace();
@@ -63,6 +62,6 @@ public class LoginController {
     public String logout() {
 
         SecurityUtils.getSubject().logout();
-        return "login";
+        return "redirect:/index";
     }
 }

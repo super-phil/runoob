@@ -18,8 +18,8 @@ import java.util.List;
  *
  * @author Phil
  */
-public class MyRealm extends AuthorizingRealm {
-    private static final Logger logger = Logger.getLogger(MyRealm.class);
+public class RunoobRealm extends AuthorizingRealm {
+    private static final Logger logger = Logger.getLogger(RunoobRealm.class);
     @Autowired
     private UserService userService;
 

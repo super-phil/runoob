@@ -17,6 +17,7 @@
     <title>首页</title>
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="/assets/bootstrap/3.3.5/css/bootstrap.min.css">
+
     <!--自定义 -->
     <link rel="stylesheet" href="/assets/css/sys.css">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -87,7 +88,6 @@
         </c:if>
         <input type="text" name="mobile" class="form-control" value="${mobile}" placeholder="Mobile" required autofocus>
         <input type="password" name="password" class="form-control" placeholder="Password" required>
-        <input type="hidden" name="origin" value="${origin}">
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
     </form>
 </div> <!-- /container -->

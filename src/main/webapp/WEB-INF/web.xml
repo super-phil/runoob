@@ -99,7 +99,7 @@
     </servlet-mapping>
     <!--mvc 文件中已配置起始页-->
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>login.jsp</welcome-file>
         <!--<welcome-file>index.html</welcome-file>-->
     </welcome-file-list>
     <!-- 配置session超时时间，单位分钟 -->
@@ -110,10 +110,10 @@
     <!--<error-code>405</error-code>-->
     <!--<location>/WEB-INF/405.html</location>-->
     <!--</error-page>-->
-    <error-page>
-        <error-code>404</error-code>
-        <location>/WEB-INF/views/404.jsp</location>
-    </error-page>
+    <!--<error-page>-->
+        <!--<error-code>404</error-code>-->
+        <!--<location>/WEB-INF/views/404.jsp</location>-->
+    <!--</error-page>-->
     <!--<error-page>-->
     <!--<error-code>500</error-code>-->
     <!--<location>/WEB-INF/500.jsp</location>-->

@@ -25,27 +25,7 @@
     <![endif]-->
 </head>
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/index">Runoob</a>
-        </div>
-        <div>
-            <div class="collapse navbar-collapse navbar-right">
-                <ul class="nav navbar-nav">
-                    <li><a class="navbar-link btn btn-info btn-sm" href="/home">去后台</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
+#parse("/nav.vm")
 <div class="container sys-head">
     <div class="row">
         <div class="col-xs-12 col-sm-9 col-md-10 ">
@@ -95,10 +75,6 @@
 <script src="/assets/js/plugins/highcharts/exporting.js"></script>
 <script type="text/javascript">
     $(function () {
-        var interval = 5000;
-        $('#fqcy').change(function () {
-            interval = $("#fqcy").val() * 1000;
-        });
         $('#container').highcharts({
             chart: {
                 type: 'spline',
@@ -121,7 +97,7 @@
                                     series.addPoint([x, y], true, true);
                                 }
                             });
-                        }, interval);
+                        }, 5000);
                     }
                 }
             },
@@ -151,68 +127,6 @@
             }]
 
         });
-
-
-//           $('#container').highcharts({
-//                chart: {
-//                    type: 'spline',
-//                    animation: Highcharts.svg, // don't animate in old IE
-//                    marginRight: 10,
-//                    events: {
-//                        load: function () {
-//
-//                        }
-//                    }
-//                },
-//                title: {
-//                    text: 'Live random data'
-//                },
-//                xAxis: {
-////                    type: 'datetime',
-////                    tickPixelInterval: 150
-//                },
-//                yAxis: {
-//                    title: {
-//                        text: 'Value'
-//                    },
-//                    plotLines: [{
-//                        value: 0,
-//                        width: 1,
-//                        color: '#808080'
-//                    }]
-//                },
-//                tooltip: {
-////                    formatter: function () {
-////                        return '<b>' + this.series.name + '</b><br/>' +
-////                                Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' +
-////                                Highcharts.numberFormat(this.y, 2);
-////                    }
-//                },
-//                legend: {
-//                    enabled: false
-//                },
-//                exporting: {
-//                    enabled: false
-//                },
-//                series: [{
-//                    name: 'Random data',
-//                    data: (function () {
-//                        // generate an array of random data
-//                        var data = [],
-//                                time = (new Date()).getTime(),
-//                                i;
-//
-//                        for (i = -19; i <= 0; i += 1) {
-//                            data.push({
-//                                x: time + i * 1000,
-//                                y: Math.random()
-//                            });
-//                        }
-//                        console.info(data);
-//                        return data;
-//                    }())
-//                }]
-//            });
     });
 </script>
 </body>
