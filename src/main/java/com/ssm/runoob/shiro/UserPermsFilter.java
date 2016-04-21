@@ -1,6 +1,7 @@
 package com.ssm.runoob.shiro;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ssm.runoob.model.User;
 import org.apache.log4j.Logger;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.StringUtils;
@@ -27,23 +28,20 @@ public class UserPermsFilter extends AuthorizationFilter {
         logger.info("自定义授权过滤器!" + httpServletRequest.getRequestURI());
         //得到subject
         Subject subject = getSubject(servletRequest, servletResponse);
-        //得到xml perms 中的权限
-//        ExhibitionUser user = (ExhibitionUser) subject.getPrincipal();
-//        if (user.getMode() == Constants.MODE_USER_ROOT) return true;
+        //得到xml roles 中的权限
+//        User user = (User) subject.getPrincipal();
+//        if (user.getMode() == Constants.MODE_USER_ROOT) return true;//如果是超级管理员直接放行
         String[] perms = (String[]) object;
-//        logger.info(String.format("登录用户ID: %s 权限[%s]!", user.getId(), perms));
-//        logger.error("USERPERMSFILTER ISACCESSALLOWED PERMS!"+ JSON.toJSONString(perms));
         boolean isPermitted = true;
         if (perms != null && perms.length != 0) {
             for (String perm : perms) {
-                //当前用户是否有权限
-                boolean permitted = subject.isPermitted(perm);
+                boolean permitted = subject.hasRole(perm);
                 if (permitted) {
                     logger.info(String.format("有[%s]权限!", perm));
                     isPermitted = true;
                     break;
                 } else {
-                    logger.error(String.format("没有[%s]权限!",perm));
+                    logger.error(String.format("没有[%s]权限!", perm));
                     isPermitted = false;
                 }
             }

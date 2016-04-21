@@ -11,6 +11,19 @@
         <result column="remark" property="remark" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
     </resultMap>
+    <resultMap id="RolePrivilegeResultMap" type="com.ssm.runoob.model.Role">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <collection property="privileges" ofType="com.ssm.runoob.model.Privilege">
+            <!-- id用于定义主表的唯一标识，是从表识别主表主键的唯一标识，column是结果集对应的字段名 -->
+            <id column="p_id" property="id"/>
+            <!-- result是普通属性，其他解释同上 -->
+            <result column="p_name" property="name"/>
+            <result column="p_url" property="url"/>
+        </collection>
+    </resultMap>
     <sql id="Base_Column_List">
         <!--
           WARNING - @mbggenerated
@@ -70,6 +83,14 @@
         <include refid="Base_Column_List"/>
         from role
     </select>
+    <select id="getAllRolePrivilege"  resultMap="RolePrivilegeResultMap">
+        SELECT
+        r.id AS id,r.name AS name,r.remark AS remark,
+        p.id AS p_id,p.name AS p_name,p.url AS p_url
+        FROM role AS r
+        RIGHT JOIN role_privilege AS rp ON r.id = rp.role_id
+        RIGHT JOIN privilege AS p ON rp.privilege_id = p.id
+    </select>
     <insert id="insert" parameterType="com.ssm.runoob.model.Role">
         <!--
           WARNING - @mbggenerated
@@ -119,7 +140,7 @@
         insert into role_privilege (role_id, privilege_id)
         values
         <foreach collection="rps" item="rp" open="(" separator="),(" close=")">
-        #{rp.roleId}, #{rp.privilegeId}
+            #{rp.roleId}, #{rp.privilegeId}
         </foreach>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="com.ssm.runoob.model.Role">

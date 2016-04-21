@@ -17,12 +17,12 @@ import java.util.Map;
  *
  * @author Phil
  */
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService {
-    private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+
     @Autowired
     private UserMapper userMapper;
-
+    private final Logger logger = Logger.getLogger(this.getClass());
     @Override
     public int deleteByPrimaryKey(Long id) {
         //删除user_role 关联关系

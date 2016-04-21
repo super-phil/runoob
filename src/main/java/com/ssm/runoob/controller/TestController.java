@@ -1,6 +1,7 @@
 package com.ssm.runoob.controller;
 
 import com.ssm.runoob.model.User;
+import com.ssm.runoob.service.RoleService;
 import com.ssm.runoob.service.TestService;
 import com.ssm.runoob.service.UserService;
 import com.ssm.runoob.util.FileUtils;
@@ -24,9 +25,12 @@ public class TestController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
-
+        roleService.loadFilterChainDefinitions();
         return "test/index";
     }
 

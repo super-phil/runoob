@@ -10,8 +10,6 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Phil on 2016/2/26.
@@ -33,8 +31,8 @@ public class RunoobRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获取权限
-        List<String> permsNames = new ArrayList<>();
-        info.addStringPermissions(permsNames);//授权
+        User user = (User) principalCollection.getPrimaryPrincipal();
+        info.addRole(user.getRole().getName());//授权
         return info;
     }
 
@@ -52,7 +50,7 @@ public class RunoobRealm extends AuthorizingRealm {
         String mobile = usernamePasswordToken.getUsername();
         String password = new String(usernamePasswordToken.getPassword());
         logger.info("我来认证:-->" + mobile + "--" + password);
-        User user = userService.findByMobilePassword(mobile,password);
+        User user = userService.findByMobilePassword(mobile, password);
         return new SimpleAuthenticationInfo(user, password, getName());
     }
 }

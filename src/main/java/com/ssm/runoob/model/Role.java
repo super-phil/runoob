@@ -1,6 +1,7 @@
 package com.ssm.runoob.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class Role {
     private Long id;
@@ -10,6 +11,16 @@ public class Role {
     private String remark;
 
     private Date createTime;
+
+    private List<Privilege> privileges;
+
+    public List<Privilege> getPrivileges() {
+        return privileges;
+    }
+
+    public void setPrivileges(List<Privilege> privileges) {
+        this.privileges = privileges;
+    }
 
     public Long getId() {
         return id;

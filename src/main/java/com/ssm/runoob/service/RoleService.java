@@ -4,6 +4,7 @@ import com.ssm.runoob.model.Role;
 import com.ssm.runoob.model.RolePrivilege;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Phil on 2016/4/15.
@@ -26,4 +27,10 @@ public interface RoleService {
     int removeAssignAllByRID(Long rid);
 
     List<Role> getAll();
+
+    List<Role> getAllRolePrivilege();
+
+    void loadFilterChainDefinitions();
+
+    Map<String, String> getFilterChainDefinitions();
 }

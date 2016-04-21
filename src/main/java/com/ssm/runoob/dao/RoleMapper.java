@@ -68,4 +68,6 @@ public interface RoleMapper {
     int removeURAssignAllByRID(@Param("rid") Long rid);
 
     List<Role> getAll();
+
+    List<Role> getAllRolePrivilege();
 }
