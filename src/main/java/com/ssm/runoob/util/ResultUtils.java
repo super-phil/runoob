@@ -165,4 +165,8 @@ public class ResultUtils {
     public static JSONObject success(Object data) {
         return data(data);
     }
+
+    public static JSONObject UnAuthcError() {
+        return msg(MsgEnum.UN_AUTH_ERROR.getCode(), MsgEnum.UN_AUTH_ERROR.getMsg());
+    }
 }

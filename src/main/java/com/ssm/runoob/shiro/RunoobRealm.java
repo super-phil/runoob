@@ -1,5 +1,6 @@
 package com.ssm.runoob.shiro;
 
+import com.ssm.runoob.model.Role;
 import com.ssm.runoob.model.User;
 import com.ssm.runoob.service.UserService;
 import org.apache.log4j.Logger;
@@ -32,7 +33,10 @@ public class RunoobRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //获取权限
         User user = (User) principalCollection.getPrimaryPrincipal();
-        info.addRole(user.getRole().getName());//授权
+        Role role = user.getRole();
+        if(null != role){
+            info.addRole(role.getName());//授权
+        }
         return info;
     }
 

@@ -6,6 +6,7 @@ package com.ssm.runoob.enums;
 public enum MsgEnum {
     ERROR(999, "服务器异常!"),
     ILLEGALARGUMENT(998, "非法参数!"),
+    UN_AUTH_ERROR(997, "您没有该功能权限,请联系管理员!"),
     SUCCESS(0, "服务器正常!"),
     ADD_ERROR(1, "添加失败！"),
     ADD_SUCCESS(0, "添加成功！"),

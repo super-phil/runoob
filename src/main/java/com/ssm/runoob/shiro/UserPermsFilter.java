@@ -2,6 +2,7 @@ package com.ssm.runoob.shiro;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ssm.runoob.model.User;
+import com.ssm.runoob.util.ResultUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.StringUtils;
@@ -91,13 +92,11 @@ public class UserPermsFilter extends AuthorizationFilter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setCharacterEncoding("UTF-8");
         httpResponse.setContentType("application/json; charset=utf-8");
-        JSONObject jo = new JSONObject();
-        jo.put("code", 1);
-        jo.put("msg", "您没有权限操作,请联系管理员!");
+        JSONObject tip = ResultUtils.UnAuthcError();
         PrintWriter out = null;
         try {
             out = httpResponse.getWriter();
-            out.write(jo.toJSONString());
+            out.write(tip.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

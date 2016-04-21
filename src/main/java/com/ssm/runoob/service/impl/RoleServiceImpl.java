@@ -93,13 +93,8 @@ public class RoleServiceImpl implements RoleService {
         Map<String, String> map = getFilterChainDefinitions();
         Map<String, String> filterChainDefinitionMap = shiroFilterFactoryBean.getFilterChainDefinitionMap();
         filterChainDefinitionMap.clear();//清空原有规则
-
-
         filterChainDefinitionMap.putAll(ShiroUtils.getDefaultFilterChainDefinitionMap());
         filterChainDefinitionMap.putAll(map);
-
-        Subject subject = SecurityUtils.getSubject();
-        subject.logout();//强制当前用户退出
     }
 
     @Override
