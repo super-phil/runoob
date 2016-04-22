@@ -28,7 +28,7 @@ public class TreeNodeServiceImpl implements TreeNodeService {
                 treeNode.setName(privilege.getName());
 
                 treeNode.setChecked(true);
-                treeNode.setChildren(getTree(privilege.getId(), new ArrayList<>()));
+                treeNode.setChildren(getTree(privilege.getId(), new ArrayList<TreeNode>()));
                 list.add(treeNode);
             }
         }
