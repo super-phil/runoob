@@ -29,8 +29,11 @@ public class TestController {
     private RoleService roleService;
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String index() {
-        roleService.loadFilterChainDefinitions();
+    public String index(HttpSession session) {
+//        roleService.loadFilterChainDefinitions();
+        User user = new User();
+        user.setName("zzzz");
+        session.setAttribute("user",user);
         return "test/index";
     }
 
