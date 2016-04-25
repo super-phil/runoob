@@ -72,7 +72,7 @@ public class FileUtils {
      * @param request  the request
      * @author Phil
      */
-    public static void download(String fileName, HttpServletResponse response, HttpServletRequest request) {
+    public static void download(String fileName, HttpServletRequest request, HttpServletResponse response) {
         File file;
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;

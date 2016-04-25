@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -33,7 +35,7 @@ public class TestController {
 //        roleService.loadFilterChainDefinitions();
         User user = new User();
         user.setName("zzzz");
-        session.setAttribute("user",user);
+        session.setAttribute("user", user);
         return "test/index";
     }
 
@@ -172,5 +174,28 @@ public class TestController {
         return "test/messages";
     }
 
+    /**
+     * Upload string.
+     *
+     * @param file the file
+     * @return the string
+     * @author Phil
+     */
+    @RequestMapping(value = "down", method = RequestMethod.GET)
+    public String downIndex() {
+        return "test/download";
+    }
+    /**
+     * Upload string.
+     *
+     * @param file the file
+     * @return the string
+     * @author Phil
+     */
+    @RequestMapping(value = "download", method = RequestMethod.GET)
+    public void download(@RequestParam(value = "path",required = false) String path, HttpServletRequest request, HttpServletResponse response) {
+        FileUtils.download("E:\\git-repository\\runoob\\src\\main\\webapp\\assets\\images\\20091214315713788.jpg", request, response);
+
+    }
 
 }
