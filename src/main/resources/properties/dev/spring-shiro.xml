@@ -2,6 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
     <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
     <bean id="runoobRealm" class="com.ssm.runoob.shiro.RunoobRealm"/>
 
@@ -30,9 +32,9 @@
 
     <!-- Shiro默认会使用Servlet容器的Session,可通过sessionMode属性来指定使用Shiro原生Session -->
     <!-- 即<property name="sessionMode" value="native"/>,详细说明见官方文档 -->
-    <bean id="sessionManager"
+    <bean id="redisSessionManager"
           class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="sessionDAO" ref="redisSessionDao"/>
         <property name="sessionIdCookieEnabled" value="true"/>
         <property name="sessionIdCookie" ref="sessionIdCookie"/>
         <property name="deleteInvalidSessions" value="true"/>
@@ -40,10 +42,9 @@
     </bean>
 
     <!-- 自定义shiro的sessionDao，把session写入redis -->
-    <bean id="sessionDAO" class="com.zhm.ssr.shiro.RedisSessionDao">
-        <constructor-arg ref="redisTemplate" />
-        <constructor-arg value="${redis.expireTime}" />
-    </bean>
+    <bean id="redisSessionDao" class="com.ssm.runoob.shiro.RedisSessionDao"/>
+
+
     <!--<bean id="redisCacheManager" class="com.zhm.ssr.shiro.RedisCacheManager" >-->
     <!--<property name="redisManager" ref="redisManager" />-->
     <!--</bean>-->
@@ -59,7 +60,7 @@
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="runoobRealm"/>
         <!-- shiro使用redis缓存 -->
-        <property name="sessionManager" ref="sessionManager"/>
+        <property name="sessionManager" ref="redisSessionManager"/>
         <!--<property name="cacheManager" ref="redisCacheManager"/>-->
         <!-- 客户端勾选记住 -->
         <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
