@@ -5,11 +5,64 @@
     <!-- 继承自AuthorizingRealm的自定义Realm,即指定Shiro验证用户登录的类为自定义的ShiroDbRealm.java -->
     <bean id="runoobRealm" class="com.ssm.runoob.shiro.RunoobRealm"/>
 
+    <!-- session 保存到cookie，关闭浏览器下次可以直接登录认证，当maxAge为-1不会写cookie。-->
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="sid"/>
+        <property name="httpOnly" value="true"/>
+        <!-- 浏览器关闭session失效，不计入cookie -->
+        <property name="maxAge" value="-1"/>
+    </bean>
+
+    <!--  记住我功能，当关闭浏览器下次再访问的时候不需要登录也能查看。只对filterChainDefinitions设置为user级别的链接有效，
+            类似于淘宝看商品、添加购物车，不需要验证是否登录。但是提交订单就必须登录。
+       -->
+    <!--<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">-->
+    <!--<constructor-arg value="rememberMe"/>-->
+    <!--<property name="httpOnly" value="true"/>-->
+    <!--<property name="maxAge" value="2592000"/>&lt;!&ndash; 30天 &ndash;&gt;-->
+    <!--</bean>-->
+    <!--<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">-->
+    <!--<property name="cookie" ref="rememberMeCookie"/>-->
+    <!--&lt;!&ndash; aes key。shiro默认的key是不安全的,可以使用工程utils包的GenerateAESKey生成一个自定义的key&ndash;&gt;-->
+    <!--<property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('XgGkgqGqYrix9lI6vxcrRw==')}"/>-->
+    <!--</bean>-->
+
+
     <!-- Shiro默认会使用Servlet容器的Session,可通过sessionMode属性来指定使用Shiro原生Session -->
     <!-- 即<property name="sessionMode" value="native"/>,详细说明见官方文档 -->
+    <bean id="sessionManager"
+          class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+        <property name="deleteInvalidSessions" value="true"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+    </bean>
+
+    <!-- 自定义shiro的sessionDao，把session写入redis -->
+    <bean id="sessionDAO" class="com.zhm.ssr.shiro.RedisSessionDao">
+        <constructor-arg ref="redisTemplate" />
+        <constructor-arg value="${redis.expireTime}" />
+    </bean>
+    <!--<bean id="redisCacheManager" class="com.zhm.ssr.shiro.RedisCacheManager" >-->
+    <!--<property name="redisManager" ref="redisManager" />-->
+    <!--</bean>-->
+
+    <!--<bean id="redisManager" class="com.zhm.ssr.shiro.RedisManager">-->
+    <!--<property name="expire" value="${redis.expireTime}" />-->
+    <!--<property name="host" value="${redis.host}" />-->
+    <!--<property name="password" value="${redis.pass}" />-->
+    <!--<property name="port" value="${redis.port}" />-->
+    <!--<property name="timeout" value="${redis.maxWait}" />-->
+    <!--</bean>-->
     <!-- 这里主要是设置自定义的单Realm应用,若有多个Realm,可使用'realms'属性代替 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="runoobRealm"/>
+        <!-- shiro使用redis缓存 -->
+        <property name="sessionManager" ref="sessionManager"/>
+        <!--<property name="cacheManager" ref="redisCacheManager"/>-->
+        <!-- 客户端勾选记住 -->
+        <!--<property name="rememberMeManager" ref="rememberMeManager"/>-->
     </bean>
 
     <!-- Shiro主过滤器本身功能十分强大,其强大之处就在于它支持任何基于URL路径表达式的、自定义的过滤器的执行 -->
