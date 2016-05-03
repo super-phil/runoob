@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="/assets/bootstrap/3.3.5/css/bootstrap.min.css">
     <!--表格-->
     <link rel="stylesheet" href="/assets/js/plugins/dataTables/dataTables.bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/assets/js/plugins/font-awesome/css/font-awesome.min.css">
     <!--弹窗-->
     <link rel="stylesheet" href="/assets/js/plugins/sweetalert/sweetalert.css">
     <!-- 验证-->
@@ -51,8 +53,15 @@
                             </button>
                         </div>
                         <div class="col-xs-6 col-xs-offset-6 col-sm-6 col-sm-offset-4 col-md-4 col-md-offset-6">
-                            <input id="table-search" type="text" class="form-control" placeholder="search"
-                                   autocomplete="off">
+                            <div class="input-group input-group-sm">
+                                <input id="table-search" type="text" name="q" class="form-control" placeholder="search"
+                                       autocomplete="off">
+                                <div class="input-group-btn">
+                                    <button type="submit" class="btn-search btn btn-default"><i
+                                            class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <table id="data-list" class="table table-bordered table-hover display" width="100%">
@@ -261,8 +270,16 @@
         //隐藏默认的搜索
         $(".dataTables_filter").hide();
         //自定义搜索
-        $('#table-search').on('keyup', function () {
-            table.search(this.value).draw();
+        $('#table-search').keydown(function (e) {
+            var keynum = window.event ? e.keyCode : e.which;
+            if (13 == keynum) {//回车
+//                var q = $(':text[name="q"]').val();
+                table.search(this.value).draw();
+            }
+        })
+        $('.btn-search').click(function () {
+            var q = $(':text[name="q"]').val();
+            table.search(q).draw();
         });
 
         var bean_add_form = $('#add-form');
