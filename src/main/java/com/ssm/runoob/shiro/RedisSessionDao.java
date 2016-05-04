@@ -33,7 +33,6 @@ public class RedisSessionDao extends CachingSessionDAO {
     @Override
     protected Session doReadSession(Serializable sessionId) {
         Session session = redisTemplate.opsForValue().get(REDIS_SHIRO_SESSION + sessionId);
-        logger.info("#############" + JSON.toJSONString(session) + "###########");
         return session;
     }
 

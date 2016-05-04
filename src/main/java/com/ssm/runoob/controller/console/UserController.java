@@ -1,4 +1,4 @@
-package com.ssm.runoob.controller.base;
+package com.ssm.runoob.controller.console;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -11,14 +11,11 @@ import com.ssm.runoob.service.UserService;
 import com.ssm.runoob.util.ResultUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.shiro.web.util.WebUtils;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -39,7 +36,7 @@ public class UserController {
     public String index(Model model) {
         List<Role> roles = roleService.getAll();
         model.addAttribute("roles", roles);
-        return "base/user_list";
+        return "console/user_list";
     }
 
     @ResponseBody

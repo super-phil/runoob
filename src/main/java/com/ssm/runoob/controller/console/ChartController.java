@@ -1,4 +1,4 @@
-package com.ssm.runoob.controller.base;
+package com.ssm.runoob.controller.console;
 
 import com.ssm.runoob.util.ResultUtils;
 import org.joda.time.DateTime;

@@ -1,4 +1,4 @@
-package com.ssm.runoob.controller.base;
+package com.ssm.runoob.controller.console;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -35,7 +35,7 @@ public class RoleController {
      */
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
-        return "base/role_list";
+        return "console/role_list";
     }
 
     /**

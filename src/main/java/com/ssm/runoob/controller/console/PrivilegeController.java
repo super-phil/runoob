@@ -1,4 +1,4 @@
-package com.ssm.runoob.controller.base;
+package com.ssm.runoob.controller.console;
 
 import com.alibaba.fastjson.JSON;
 import com.ssm.runoob.model.DTRequest;
@@ -32,7 +32,7 @@ public class PrivilegeController {
 
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
-        return "base/privilege_list";
+        return "console/privilege_list";
     }
 
     @ResponseBody
