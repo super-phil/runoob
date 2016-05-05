@@ -49,7 +49,7 @@ public class PrivilegeController {
             dtResponse.setRecordsFiltered(privilegeService.countByQuery(dtRequest.getSearch()));//有效数据
         }
         dtResponse.setData(list);
-        return JSON.toJSON(dtResponse);
+        return dtResponse;
     }
 
     @ResponseBody

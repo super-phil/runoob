@@ -53,7 +53,7 @@ public class UserController {
             dtResponse.setRecordsFiltered(userService.countByQuery(dtRequest.getSearch()));//有效数据
         }
         dtResponse.setData(list);
-        return JSON.toJSON(dtResponse);
+        return dtResponse;
     }
 
     @ResponseBody
