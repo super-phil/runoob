@@ -5,6 +5,7 @@ import com.ssm.runoob.service.RoleService;
 import com.ssm.runoob.service.TestService;
 import com.ssm.runoob.service.UserService;
 import com.ssm.runoob.util.FileUtils;
+import com.ssm.runoob.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -121,6 +122,19 @@ public class TestController {
     public String upload(@RequestParam("file") MultipartFile file) {
         FileUtils.upload(file, "e:\\", file.getOriginalFilename());
         return "redirect:/test/upload";
+    }
+    /**
+     * ajax Upload file.
+     * ajax
+     * @param file the file
+     * @return the string
+     * @author Phil
+     */
+    @ResponseBody
+    @RequestMapping(value = "upload2", method = RequestMethod.POST)
+    public Object upload2(MultipartFile file) {
+        FileUtils.upload(file, "e:\\", file.getOriginalFilename());
+        return ResultUtils.success("ok!");
     }
 
     /**

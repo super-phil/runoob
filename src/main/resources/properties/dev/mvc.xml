@@ -66,9 +66,9 @@
             <bean class="com.ssm.runoob.interceptor.TestInterceptor"/>
         </mvc:interceptor>
         <!--<mvc:interceptor>-->
-            <!--<mvc:mapping path="/login"/>-->
-            <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
-            <!--<bean class="com.ssm.runoob.interceptor.LoginInterceptor"/>-->
+        <!--<mvc:mapping path="/login"/>-->
+        <!--&lt;!&ndash; 定义在mvc:interceptor下面的表示是对特定的请求才进行拦截的 &ndash;&gt;-->
+        <!--<bean class="com.ssm.runoob.interceptor.LoginInterceptor"/>-->
         <!--</mvc:interceptor>-->
     </mvc:interceptors>
     <!--velocity的配置 -->
@@ -139,9 +139,9 @@
         <!-- 其中basename用来指定properties文件的通用名
                  如实例中的messages_en.properties,messages_ja.properties通用名都是messages
          -->
-        <property name="basename" value="messages" />
+        <property name="basename" value="messages"/>
         <property name="defaultEncoding" value="UTF-8"/>
-        <property name="useCodeAsDefaultMessage" value="true" />
+        <property name="useCodeAsDefaultMessage" value="true"/>
 
     </bean>
     <!-- 配置基于Session的处理,将提交上来的locale参数进行处理 -->
@@ -152,16 +152,16 @@
 
     <!-- 国际化请求拦截器处理 -->
     <mvc:interceptors>
-        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor" />
+        <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
     </mvc:interceptors>
     <!-- 基于Cookie的本地化解析器 -->
     <!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">-->
-        <!--<property name="cookieMaxAge" value="604800"/>-->
-        <!--<property name="defaultLocale" value="zh"/>-->
-        <!--<property name="cookieName" value="Language"/>-->
+    <!--<property name="cookieMaxAge" value="604800"/>-->
+    <!--<property name="defaultLocale" value="zh"/>-->
+    <!--<property name="cookieName" value="Language"/>-->
     <!--</bean>-->
     <!--文件上传-->
-    <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="104857600"/>
         <property name="maxInMemorySize" value="4096"/>
         <property name="defaultEncoding" value="UTF-8"/>
