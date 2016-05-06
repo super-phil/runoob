@@ -13,8 +13,8 @@ public class SerializeUtils {
     /**
      * 反序列化
      *
-     * @param bytes
-     * @return
+     * @param bytes the bytes
+     * @return object
      */
     public static Object deserialize(byte[] bytes) {
 
@@ -42,6 +42,12 @@ public class SerializeUtils {
         return result;
     }
 
+    /**
+     * Is empty boolean.
+     *
+     * @param data the data
+     * @return the boolean
+     */
     public static boolean isEmpty(byte[] data) {
         return (data == null || data.length == 0);
     }
@@ -49,8 +55,8 @@ public class SerializeUtils {
     /**
      * 序列化
      *
-     * @param object
-     * @return
+     * @param object the object
+     * @return byte [ ]
      */
     public static byte[] serialize(Object object) {
 

@@ -11,6 +11,12 @@ import java.io.IOException;
  */
 public class WebUtils extends org.springframework.web.util.WebUtils {
 
+    /**
+     * Is ajax boolean.
+     *
+     * @param request the request
+     * @return the boolean
+     */
     public static boolean isAjax(ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         return "XMLHttpRequest".equalsIgnoreCase(httpRequest.getHeader("X-Requested-With"));

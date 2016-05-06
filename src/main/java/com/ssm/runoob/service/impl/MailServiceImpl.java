@@ -18,6 +18,11 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private JavaMailSenderImpl javaMailSender;
 
+    /**
+     * Send simple mail.
+     *
+     * @param toAddress the to address
+     */
     public void sendSimpleMail(String toAddress) {
         // 建立邮件消息
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();

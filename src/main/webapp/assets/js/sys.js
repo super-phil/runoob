@@ -2,31 +2,6 @@
  * js 工具
  * Created by Phil on 2015/12/19.
  */
-//dataTable
-$.extend($.fn.dataTable.defaults, {
-    "searching": true,//不允许搜索
-    "lengthChange": false,//不允许改变每页显示数量
-    "processing": true,
-    "serverSide": true,//服务器交互
-    "ordering": true,//排序
-    "autoWidth": true,//自动宽度
-    "deferRender": true,
-    "scrollX": true,//水平滚动条
-    "language": {
-        "sSearch": "查询:",
-        "lengthMenu": "每页 _MENU_ 条记录",
-        "zeroRecords": "没有找到记录",
-        "sEmptyTable": "没有找到记录",
-        "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
-        "infoEmpty": "没有找到记录",
-        "infoFiltered": "(从 _MAX_ 条记录过滤)",
-        "sProcessing": "加载中... ...",
-        "paginate": {
-            "previous": "上一页",
-            "next": "下一页"
-        }
-    }
-});
 var sys = $.extend({}, sys);
 $(function () {
     /**
@@ -136,6 +111,9 @@ $(function () {
                     type: "error"//成功类型
                 }
             );
+            if (callback) {
+                callback();
+            }
         }
     };
     //确认弹窗
@@ -209,7 +187,9 @@ $(function () {
     };
     /**
      * 删除
+     * @param url
      * @param id
+     * @param callback
      */
     sys.del = function (url, id, callback) {
         $.ajax({

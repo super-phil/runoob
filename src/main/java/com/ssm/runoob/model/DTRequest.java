@@ -35,38 +35,84 @@ public class DTRequest implements Serializable {
         DTOrder dtOrder = order.get(0);//默认列排序
         return columns.get(dtOrder.getColumn()).getData() + " " + dtOrder.getDir();
     }
+
+    /**
+     * Gets draw.
+     *
+     * @return the draw
+     */
     public int getDraw() {
         return draw;
     }
 
+    /**
+     * Sets draw.
+     *
+     * @param draw the draw
+     */
     public void setDraw(int draw) {
         this.draw = draw;
     }
 
+    /**
+     * Gets start.
+     *
+     * @return the start
+     */
     public int getStart() {
         return start;
     }
 
+    /**
+     * Sets start.
+     *
+     * @param start the start
+     */
     public void setStart(int start) {
         this.start = start;
     }
 
+    /**
+     * Gets length.
+     *
+     * @return the length
+     */
     public int getLength() {
         return length;
     }
 
+    /**
+     * Sets length.
+     *
+     * @param length the length
+     */
     public void setLength(int length) {
         this.length = length;
     }
 
+    /**
+     * Sets search.
+     *
+     * @param search the search
+     */
     public void setSearch(DTSearch search) {
         this.search = search;
     }
 
+    /**
+     * Sets order.
+     *
+     * @param order the order
+     */
     public void setOrder(List<DTOrder> order) {
         this.order = order;
     }
 
+    /**
+     * Sets columns.
+     *
+     * @param columns the columns
+     */
     public void setColumns(List<DTColumn> columns) {
         this.columns = columns;
     }

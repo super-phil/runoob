@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping("index")
 public class IndexController {
+    /**
+     * Index string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String index() {
         return "index";

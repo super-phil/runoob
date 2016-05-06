@@ -122,6 +122,7 @@
 <!--表格-->
 <script src="/assets/js/plugins/dataTables/jquery.dataTables.min.js"></script>
 <script src="/assets/js/plugins/dataTables/dataTables.bootstrap.min.js"></script>
+<script src="/assets/js/plugins/dataTables/dataTables.zh-CN.js"></script>
 <!--弹窗-->
 <script src="/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 <!--验证-->
@@ -159,7 +160,6 @@
                     url: "/act/deploy/add",
                     dataType: 'json',
                     success: function (result) {
-                        location.reload();
                         sys.tip(result, function () {
                             table.ajax.reload();
                             act_add_modal.modal("hide");

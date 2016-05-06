@@ -1,6 +1,5 @@
 package com.ssm.runoob.controller.console;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.ssm.runoob.model.DTRequest;
@@ -117,7 +116,7 @@ public class RoleController {
      * Assign object.
      *
      * @param obj 权限ids
-     * @return object
+     * @return object object
      */
     @ResponseBody
     @RequestMapping(value = "assign", method = RequestMethod.POST)

@@ -44,6 +44,11 @@ public class DynamicFilterChainDefinitions implements FactoryBean<Ini.Section> {
         return false;
     }
 
+    /**
+     * Sets filter chain definitions.
+     *
+     * @param filterChainDefinitions the filter chain definitions
+     */
     public void setFilterChainDefinitions(String filterChainDefinitions) {
         this.filterChainDefinitions = filterChainDefinitions;
     }

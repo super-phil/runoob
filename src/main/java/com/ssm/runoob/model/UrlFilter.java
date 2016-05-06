@@ -10,18 +10,38 @@ public class UrlFilter implements Serializable {
     private String url;
     private String authc;
 
+    /**
+     * Gets url.
+     *
+     * @return the url
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * Sets url.
+     *
+     * @param url the url
+     */
     public void setUrl(String url) {
         this.url = url;
     }
 
+    /**
+     * Gets authc.
+     *
+     * @return the authc
+     */
     public String getAuthc() {
         return authc;
     }
 
+    /**
+     * Sets authc.
+     *
+     * @param authc the authc
+     */
     public void setAuthc(String authc) {
         this.authc = authc;
     }

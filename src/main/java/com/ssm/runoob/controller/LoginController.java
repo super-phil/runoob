@@ -21,12 +21,25 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class LoginController {
 
+    /**
+     * Index string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "login", method = RequestMethod.GET)
     public String index() {
         return "login";
     }
 
 
+    /**
+     * Login object.
+     *
+     * @param mobile   the mobile
+     * @param password the password
+     * @param request  the request
+     * @return the object
+     */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public Object login(
             @RequestParam(value = "mobile") String mobile,
@@ -58,6 +71,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Logout string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "logout", method = RequestMethod.GET)
     public String logout() {
 

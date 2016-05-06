@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 /**
  * Created by Phil on 2016/3/28.
+ *
+ * @param <K> the type parameter
+ * @param <V> the type parameter
  */
 @Service("redisService")
 public class RedisServiceImpl<K, V> implements RedisService<K, V> {

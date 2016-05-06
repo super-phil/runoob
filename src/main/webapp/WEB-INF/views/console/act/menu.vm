@@ -5,8 +5,16 @@
     <ul class="list-group">
         <a href="/act/deploy/index" class="list-group-item">流程部署</a>
         <a href="/act/procdef/index" class="list-group-item">流程定义</a>
-        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item"></a>
         <a href="#" class="list-group-item">Porta ac consectetur ac</a>
         <a href="#" class="list-group-item">Vestibulum at eros</a>
+    </ul>
+</div>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">流程表单</h3>
+    </div>
+    <ul class="list-group">
+        <a href="/act/deploy/index" class="list-group-item">请假单</a>
     </ul>
 </div>

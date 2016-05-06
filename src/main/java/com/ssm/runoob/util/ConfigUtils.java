@@ -32,10 +32,21 @@ public class ConfigUtils {
     }
 
 
+    /**
+     * Get string.
+     *
+     * @param key the key
+     * @return the string
+     */
     public static String get(String key) {
         return prop.getProperty(key);
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         System.out.println(get("mail.username"));
     }

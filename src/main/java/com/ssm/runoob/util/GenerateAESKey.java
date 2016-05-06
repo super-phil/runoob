@@ -9,6 +9,11 @@ import javax.crypto.SecretKey;
  * Created by Phil on 2016/4/25.
  */
 public class GenerateAESKey {
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         try {
             System.out.println(Base64.encodeToString(initKey()));
@@ -17,6 +22,12 @@ public class GenerateAESKey {
         }
     }
 
+    /**
+     * Init key byte [ ].
+     *
+     * @return the byte [ ]
+     * @throws Exception the exception
+     */
     public static byte[] initKey() throws Exception {
         //实例化
         KeyGenerator kgen = KeyGenerator.getInstance("AES");

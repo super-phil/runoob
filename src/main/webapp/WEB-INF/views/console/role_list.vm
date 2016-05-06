@@ -209,6 +209,7 @@
 <!--表格-->
 <script src="/assets/js/plugins/dataTables/jquery.dataTables.min.js"></script>
 <script src="/assets/js/plugins/dataTables/dataTables.bootstrap.min.js"></script>
+<script src="/assets/js/plugins/dataTables/dataTables.zh-CN.js"></script>
 <!--弹窗-->
 <script src="/assets/js/plugins/sweetalert/sweetalert.min.js"></script>
 <!--验证-->

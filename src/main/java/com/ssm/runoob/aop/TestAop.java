@@ -16,6 +16,13 @@ import org.springframework.stereotype.Component;
 public class TestAop {
     private static final Logger logger = Logger.getLogger(TestAop.class);
 
+    /**
+     * My around advice object.
+     *
+     * @param jionpoint the jionpoint
+     * @return the object
+     * @throws Throwable the throwable
+     */
     @Around(value = "execution(* com.ssm.runoob.service.*.*(..))")
     public Object myAroundAdvice(ProceedingJoinPoint jionpoint) throws Throwable {
         // 获取被调用的方法名

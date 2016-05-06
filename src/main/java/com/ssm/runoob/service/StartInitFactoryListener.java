@@ -6,7 +6,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 
 /**
- *
  * Created by Phil on 2016/4/21.
  */
 @Service

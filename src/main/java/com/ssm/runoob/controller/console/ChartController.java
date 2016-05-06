@@ -28,7 +28,7 @@ public class ChartController {
      * WHERE DATE_SUB(NOW(), INTERVAL 5 SECOND  ) <= create_time
      *
      * @param interval the interval
-     * @return object
+     * @return object object
      */
     @ResponseBody
     @RequestMapping(value = "ajax", method = RequestMethod.POST)

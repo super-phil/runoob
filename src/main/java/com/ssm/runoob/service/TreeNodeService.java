@@ -11,10 +11,11 @@ public interface TreeNodeService {
 
     /**
      * Gets tree.
-     *  根据parent_id 生成tree
+     * 根据parent_id 生成tree
+     *
      * @param pid  the pid
      * @param list the list
-     * @return tree
+     * @return tree tree
      */
     List<TreeNode> getTree(long pid, List<TreeNode> list);
 

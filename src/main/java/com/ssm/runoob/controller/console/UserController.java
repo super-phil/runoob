@@ -1,6 +1,5 @@
 package com.ssm.runoob.controller.console;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ssm.runoob.model.DTRequest;
 import com.ssm.runoob.model.DTResponse;
@@ -32,6 +31,12 @@ public class UserController {
     private RoleService roleService;
     private static final Logger logger = Logger.getLogger(UserController.class);
 
+    /**
+     * Index string.
+     *
+     * @param model the model
+     * @return the string
+     */
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(Model model) {
         List<Role> roles = roleService.getAll();
@@ -39,6 +44,12 @@ public class UserController {
         return "console/user_list";
     }
 
+    /**
+     * List object.
+     *
+     * @param dtRequest the dt request
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "index", method = RequestMethod.POST)
     public Object list(@RequestBody DTRequest dtRequest) {
@@ -56,6 +67,12 @@ public class UserController {
         return dtResponse;
     }
 
+    /**
+     * Insert object.
+     *
+     * @param user the user
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public Object insert(User user) {
@@ -67,6 +84,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Update object.
+     *
+     * @param user the user
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Object update(User user) {
@@ -78,6 +101,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Del object.
+     *
+     * @param id the id
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "del", method = RequestMethod.POST)
     public Object del(@RequestParam("id") long id) {
@@ -89,6 +118,12 @@ public class UserController {
         }
     }
 
+    /**
+     * Assign object.
+     *
+     * @param obj the obj
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "assign", method = RequestMethod.POST)
     public Object assign(@RequestBody JSONObject obj) {

@@ -30,11 +30,22 @@ public class PrivilegeController {
     private TreeNodeService treeNodeService;
     private static final Logger logger = Logger.getLogger(UserController.class);
 
+    /**
+     * Index string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index() {
         return "console/privilege_list";
     }
 
+    /**
+     * List object.
+     *
+     * @param dtRequest the dt request
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "index", method = RequestMethod.POST)
     public Object list(@RequestBody DTRequest dtRequest) {
@@ -52,6 +63,13 @@ public class PrivilegeController {
         return dtResponse;
     }
 
+    /**
+     * Insert object.
+     *
+     * @param privilege the privilege
+     * @param pName     the p name
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "insert", method = RequestMethod.POST)
     public Object insert(Privilege privilege, @RequestParam(value = "pName", required = false) String pName) {
@@ -68,6 +86,12 @@ public class PrivilegeController {
         }
     }
 
+    /**
+     * Update object.
+     *
+     * @param privilege the privilege
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public Object update(Privilege privilege) {
@@ -79,6 +103,12 @@ public class PrivilegeController {
         }
     }
 
+    /**
+     * Del object.
+     *
+     * @param id the id
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "del", method = RequestMethod.POST)
     public Object del(@RequestParam("id") long id) {
@@ -90,6 +120,12 @@ public class PrivilegeController {
         }
     }
 
+    /**
+     * Tree object.
+     *
+     * @param id the id
+     * @return the object
+     */
     @ResponseBody
     @RequestMapping(value = "tree", method = RequestMethod.POST)
     public Object tree(@RequestParam(value = "id", required = false) Long id) {

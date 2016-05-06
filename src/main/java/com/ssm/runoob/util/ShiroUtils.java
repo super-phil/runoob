@@ -34,10 +34,20 @@ public class ShiroUtils {
         }
     }
 
+    /**
+     * Gets default filter chain definition map.
+     *
+     * @return the default filter chain definition map
+     */
     public static Map<String, String> getDefaultFilterChainDefinitionMap() {
         return defaultFilterChainDefinitionMap;
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         ShiroUtils.getDefaultFilterChainDefinitionMap();
     }

@@ -35,7 +35,7 @@ import java.util.zip.ZipInputStream;
  */
 @Controller
 @RequestMapping("act")
-public class ActController {
+public class ActController{
     private final Logger logger = Logger.getLogger(this.getClass());
 
     @Autowired

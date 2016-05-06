@@ -68,8 +68,8 @@ public class FileUtils {
      * Download.
      *
      * @param fileName the file name
-     * @param response the response
      * @param request  the request
+     * @param response the response
      * @author Phil
      */
     public static void download(String fileName, HttpServletRequest request, HttpServletResponse response) {

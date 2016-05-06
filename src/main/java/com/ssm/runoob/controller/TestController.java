@@ -31,6 +31,12 @@ public class TestController {
     @Autowired
     private RoleService roleService;
 
+    /**
+     * Index string.
+     *
+     * @param session the session
+     * @return the string
+     */
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(HttpSession session) {
 //        roleService.loadFilterChainDefinitions();
@@ -123,9 +129,11 @@ public class TestController {
         FileUtils.upload(file, "e:\\", file.getOriginalFilename());
         return "redirect:/test/upload";
     }
+
     /**
      * ajax Upload file.
      * ajax
+     *
      * @param file the file
      * @return the string
      * @author Phil
@@ -176,12 +184,22 @@ public class TestController {
         return "user";
     }
 
+    /**
+     * Shiro string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "shiro", method = RequestMethod.GET)
     public String shiro() {
 
         return "test/index";
     }
 
+    /**
+     * Messages string.
+     *
+     * @return the string
+     */
     @RequestMapping(value = "messages", method = RequestMethod.GET)
     public String messages() {
 
@@ -199,10 +217,13 @@ public class TestController {
     public String downIndex() {
         return "test/download";
     }
+
     /**
      * Upload string.
      *
-     * @param file the file
+     * @param path     the path
+     * @param request  the request
+     * @param response the response
      * @return the string
      * @author Phil
      */

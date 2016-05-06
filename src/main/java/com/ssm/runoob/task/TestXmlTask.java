@@ -13,6 +13,9 @@ public class TestXmlTask {
     private static final Logger logger = Logger.getLogger(TestXmlTask.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
+    /**
+     * Report current time.
+     */
     public void reportCurrentTime() {
 
         logger.debug(String.format(" 定时任务：The time is now %s ", dateFormat.format(new Date())));

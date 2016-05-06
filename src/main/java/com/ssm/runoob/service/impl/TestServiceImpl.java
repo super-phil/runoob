@@ -16,6 +16,9 @@ import javax.annotation.PostConstruct;
 public class TestServiceImpl implements TestService {
     private final Logger logger = Logger.getLogger(this.getClass());
 
+    /**
+     * Ini.
+     */
     @PostConstruct
     public void ini() {
         logger.info("#############ini###########");
