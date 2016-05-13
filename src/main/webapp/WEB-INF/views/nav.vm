@@ -15,7 +15,7 @@
                 <li><a href="/user/index">用户模块</a></li>
                 <li><a href="/role/index">角色模块</a></li>
                 <li><a href="/privilege/index">权限模块</a></li>
-                <li><a href="/act/index">流程模块</a></li>
+                <li><a href="/act/deploy/index">流程模块</a></li>
             </ul>
             <div class="navbar-collapse navbar-right">
                 <ul class="nav navbar-nav">
