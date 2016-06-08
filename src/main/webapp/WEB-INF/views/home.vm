@@ -74,6 +74,10 @@
 <script src="/assets/js/plugins/highcharts/highcharts.js"></script>
 <script src="/assets/js/plugins/highcharts/exporting.js"></script>
 <script type="text/javascript">
+    var interval = 5000;
+    $('#fqcy').change(function () {
+        interval = $("#fqcy").val() * 1000;
+    });
     $(function () {
         $('#container').highcharts({
             chart: {
@@ -91,8 +95,8 @@
                                 dataType: 'json',
                                 success: function (result) {
                                     var x, y;
-                                    x = result.data.obj.x;
-                                    y = result.data.obj.y;
+                                    x = result.obj.x;
+                                    y = result.obj.y;
                                     console.info(x + "-----" + y);
                                     series.addPoint([x, y], true, true);
                                 }

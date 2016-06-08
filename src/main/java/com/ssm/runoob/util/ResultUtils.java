@@ -1,239 +1,122 @@
 package com.ssm.runoob.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.ssm.runoob.enums.MsgEnum;
 import com.ssm.runoob.model.Msg;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Created by Phil on 2015/12/19.
  */
 public class ResultUtils {
+
+    private ResultUtils() {
+    }
+
     /**
-     * Update success json object.
+     * 供DataTables  列表使用
      *
-     * @return the json object
+     * @param data
+     * @return
      */
-    public static JSONObject updateSuccess() {
-        return delSuccess(MsgEnum.UPDATE_SUCCESS.getMsg());
-    }
-
-    /**
-     * Update success json object.
-     *
-     * @param msg the msg
-     * @return the json object
-     */
-    public static JSONObject updateSuccess(String msg) {
-        return msg(MsgEnum.UPDATE_SUCCESS.getCode(), msg);
-    }
-
-    /**
-     * Update error json object.
-     *
-     * @return the json object
-     */
-    public static JSONObject updateError() {
-        return delSuccess(MsgEnum.UPDATE_ERROR.getMsg());
-    }
-
-    /**
-     * Update error json object.
-     *
-     * @param msg the msg
-     * @return the json object
-     */
-    public static JSONObject updateError(String msg) {
-        return msg(MsgEnum.UPDATE_ERROR.getCode(), msg);
-    }
-
-    /**
-     * 删除成功
-     *
-     * @return json json object
-     */
-    public static JSONObject delSuccess() {
-        return delSuccess(MsgEnum.DEL_SUCCESS.getMsg());
-    }
-
-    /**
-     * 删除成功
-     *
-     * @param msg 自定义
-     * @return json json object
-     */
-    public static JSONObject delSuccess(String msg) {
-        return msg(MsgEnum.DEL_SUCCESS.getCode(), msg);
-    }
-
-    /**
-     * 删除成功
-     *
-     * @return json json object
-     */
-    public static JSONObject delError() {
-        return delError(MsgEnum.DEL_ERROR.getMsg());
-    }
-
-    /**
-     * 删除成功
-     *
-     * @param msg 自定义
-     * @return json json object
-     */
-    public static JSONObject delError(String msg) {
-        return msg(MsgEnum.DEL_ERROR.getCode(), msg);
-    }
-
-    /**
-     * 添加成功
-     *
-     * @return json json object
-     */
-    public static JSONObject addSuccess() {
-        return addSuccess(MsgEnum.ADD_SUCCESS.getMsg());
-    }
-
-    /**
-     * 添加成功
-     *
-     * @param msg 自定义
-     * @return json json object
-     */
-    public static JSONObject addSuccess(String msg) {
-        return msg(MsgEnum.ADD_SUCCESS.getCode(), msg);
-    }
-
-    /**
-     * Add error json object.
-     *
-     * @return the json object
-     */
-    public static JSONObject addError() {
-        return addError(MsgEnum.ADD_ERROR.getMsg());
-    }
-
-    private static JSONObject addError(String msg) {
-        return msg(MsgEnum.ADD_ERROR.getCode(), msg);
-    }
-
-    /**
-     * 登陆成功
-     *
-     * @return json json object
-     */
-    public static JSONObject loginSuccess() {
-        return msg(MsgEnum.LOGIN_SUCCESS.getCode(), MsgEnum.LOGIN_SUCCESS.getMsg());
-    }
-
-    /**
-     * Login success json object.
-     *
-     * @param data the data
-     * @return the json object
-     */
-    public static JSONObject loginSuccess(String data) {
-        return msg(MsgEnum.LOGIN_SUCCESS.getCode(), data);
-    }
-
-    /**
-     * 登陆失败
-     *
-     * @return json json object
-     */
-    public static JSONObject loginError() {
-        return msg(MsgEnum.LOGIN_ERROR.getCode(), MsgEnum.LOGIN_ERROR.getMsg());
-    }
-
-
-    /**
-     * Illegal argument error json object.
-     *
-     * @return the json object
-     */
-    public static JSONObject IllegalArgumentError() {
-        return msg(MsgEnum.ILLEGALARGUMENT.getCode(), MsgEnum.ILLEGALARGUMENT.getMsg());
-    }
-
-    /**
-     * @param code   状态值
-     * @param tmpMsg 模板提示
-     * @return json
-     */
-    private static JSONObject msg(int code, String tmpMsg) {
-        return msg(code, tmpMsg, null);
-    }
-
-    /**
-     * @param code   状态值
-     * @param tmpMsg 模板提示
-     * @param msg    自定义提示 允许为空
-     * @return json
-     */
-    private static JSONObject msg(int code, String tmpMsg, String msg) {
-        msg = StringUtils.isBlank(msg) ? tmpMsg : msg;
+    public static Object list(Object data) {
         JSONObject jo = new JSONObject();
-        jo.put("data", new Msg(code, msg));
+        jo.put("data", new Msg(MsgEnum.SUCCESS.getCode(), null, data));
         return jo;
     }
 
-    /**
-     * Data json object.
-     *
-     * @param data 自定义提示 允许为空
-     * @return json json object
-     */
-    public static JSONObject data(Object data) {
-        JSONObject jo = new JSONObject();
-        jo.put("data", new Msg(MsgEnum.SUCCESS.getCode(), data));
-        return jo;
+    private static Object toJSON(int code, Object data, String msg) {
+        return JSON.toJSON(new Msg(code, msg, data));
+    }
+
+    public static Object success() {
+        return success(MsgEnum.SUCCESS.getMsg());
+    }
+
+    public static Object success(String msg) {
+        return success(msg, null);
+    }
+
+    public static Object success(Object data) {
+        return success(null, data);
+    }
+
+    public static Object success(String msg, Object data) {
+        return success(MsgEnum.SUCCESS.getCode(), msg, data);
+    }
+
+    public static Object success(int code, String msg, Object data) {
+        return toJSON(code, data, msg);
+    }
+
+    public static Object error() {
+        return error(MsgEnum.ERROR.getMsg());
+    }
+
+    public static Object error(String msg) {
+        return error(msg, null);
+    }
+
+    public static Object error(int code, String msg) {
+        return error(code, msg, null);
+    }
+
+    public static Object error(String msg, Object data) {
+        return error(MsgEnum.ERROR.getCode(), msg, data);
+    }
+
+    public static Object error(int code, String msg, Object data) {
+        return toJSON(code, data, msg);
     }
 
     /**
-     * Error json object.
+     * 操作成功
      *
-     * @return the json object
+     * @return
      */
-    public static JSONObject error() {
-        return msg(MsgEnum.ERROR.getCode(), MsgEnum.ERROR.getMsg(), null);
+    public static Object OperationSuccess() {
+        return success(MsgEnum.OPERATION_SUCCESS.getMsg());
+    }
+
+    public static Object OperationError(Object data) {
+        return error(MsgEnum.OPERATION_ERROR.getMsg(), data);
     }
 
     /**
-     * Error json object.
+     * 登陆错误
      *
-     * @param msg the msg
-     * @return the json object
+     * @return
      */
-    public static JSONObject error(String msg) {
-        return msg(MsgEnum.ERROR.getCode(), msg);
+    public static Object loginError() {
+        return error(MsgEnum.LOGIN_ERROR.getCode(), MsgEnum.LOGIN_ERROR.getMsg());
     }
 
     /**
-     * Success json object.
+     * 参数校验
      *
-     * @param msg the msg
-     * @return the json object
+     * @param field
+     * @return
      */
-    public static JSONObject success(String msg) {
-        return msg(MsgEnum.SUCCESS.getCode(), msg);
+    public static Object emptyError(String field) {
+        return error(MsgEnum.EMPTY_ERROR.getCode(), String.format(MsgEnum.EMPTY_ERROR.getMsg(), field));
     }
 
     /**
-     * Success json object.
+     * 非法参数
      *
-     * @param data the data
-     * @return the json object
+     * @param field
+     * @return
      */
-    public static JSONObject success(Object data) {
-        return data(data);
+    public static Object illegalArgumentError(String field) {
+        return error(MsgEnum.ILLEGAL_ARGUMENT_ERROR.getCode(), String.format(MsgEnum.ILLEGAL_ARGUMENT_ERROR.getMsg(), field));
     }
 
     /**
-     * Un authc error json object.
+     * 未授权异常
      *
-     * @return the json object
+     * @return
      */
-    public static JSONObject UnAuthcError() {
-        return msg(MsgEnum.UN_AUTH_ERROR.getCode(), MsgEnum.UN_AUTH_ERROR.getMsg());
+    public static Object UnAuthError() {
+        return JSON.toJSON(new Msg(MsgEnum.UN_AUTH_ERROR.getCode(), null, MsgEnum.UN_AUTH_ERROR.getMsg()));
     }
 }

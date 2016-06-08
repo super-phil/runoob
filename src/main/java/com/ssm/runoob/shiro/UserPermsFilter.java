@@ -1,7 +1,6 @@
 package com.ssm.runoob.shiro;
 
-import com.alibaba.fastjson.JSONObject;
-import com.ssm.runoob.model.User;
+import com.alibaba.fastjson.JSON;
 import com.ssm.runoob.util.ResultUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.subject.Subject;
@@ -92,17 +91,8 @@ public class UserPermsFilter extends AuthorizationFilter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         httpResponse.setCharacterEncoding("UTF-8");
         httpResponse.setContentType("application/json; charset=utf-8");
-        JSONObject tip = ResultUtils.UnAuthcError();
-        PrintWriter out = null;
-        try {
-            out = httpResponse.getWriter();
-            out.write(tip.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (out != null) {
-                out.close();
-            }
+        try (PrintWriter out = httpResponse.getWriter()) {
+            out.write(JSON.toJSONString(ResultUtils.UnAuthError()));
         }
     }
 }

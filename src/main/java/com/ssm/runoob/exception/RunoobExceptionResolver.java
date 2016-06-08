@@ -1,5 +1,6 @@
 package com.ssm.runoob.exception;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.support.spring.FastJsonJsonView;
 import com.ssm.runoob.util.ResultUtils;
 import com.ssm.runoob.util.WebUtils;
@@ -26,7 +27,7 @@ public class RunoobExceptionResolver implements HandlerExceptionResolver {
         boolean ajax = WebUtils.isAjax(httpServletRequest);
         if (ajax) {
             FastJsonJsonView view = new FastJsonJsonView();
-            view.setAttributesMap(ResultUtils.error());
+            view.setAttributesMap(JSON.parseObject(JSON.toJSONString(ResultUtils.error())));
             modelAndView.setView(view);
             return modelAndView;
         } else {

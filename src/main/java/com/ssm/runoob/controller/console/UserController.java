@@ -78,9 +78,9 @@ public class UserController {
     public Object insert(User user) {
         int v = userService.insert(user);
         if (v > 0) {
-            return ResultUtils.addSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.addError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -95,9 +95,9 @@ public class UserController {
     public Object update(User user) {
         int v = userService.updateByPrimaryKeySelective(user);
         if (v > 0) {
-            return ResultUtils.updateSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.updateError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -112,9 +112,9 @@ public class UserController {
     public Object del(@RequestParam("id") long id) {
         int v = userService.deleteByPrimaryKey(id);
         if (v > 0) {
-            return ResultUtils.delSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.delError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -129,7 +129,7 @@ public class UserController {
     public Object assign(@RequestBody JSONObject obj) {
         Long uid = obj.getLong("uid");
         Long rid = obj.getLong("rid");
-        if (null == uid || null == rid) return ResultUtils.IllegalArgumentError();
+        if (null == uid || null == rid) return ResultUtils.illegalArgumentError("uid|rid");
         int v = userService.insertAssign(uid, rid);
         if (v > 0) {
             return ResultUtils.success("分配成功!");

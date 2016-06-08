@@ -115,8 +115,8 @@
                                 dataType: 'json',
                                 success: function (result) {
                                     var x, y;
-                                    x = result.data.obj.x;
-                                    y = result.data.obj.y;
+                                    x = result.obj.x;
+                                    y = result.obj.y;
                                     console.info(x + "-----" + y);
                                     series.addPoint([x, y], true, true);
                                 }

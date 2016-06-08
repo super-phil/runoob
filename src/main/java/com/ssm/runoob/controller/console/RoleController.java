@@ -71,9 +71,9 @@ public class RoleController {
     public Object insert(Role role) {
         int v = roleService.insert(role);
         if (v > 0) {
-            return ResultUtils.addSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.addError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -88,9 +88,9 @@ public class RoleController {
     public Object update(Role role) {
         int v = roleService.updateByPrimaryKeySelective(role);
         if (v > 0) {
-            return ResultUtils.updateSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.updateError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -105,9 +105,9 @@ public class RoleController {
     public Object del(@RequestParam("id") long id) {
         int v = roleService.deleteByPrimaryKey(id);
         if (v > 0) {
-            return ResultUtils.delSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.delError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -128,7 +128,7 @@ public class RoleController {
         Integer[] pids = ids.toArray(new Integer[ids.size()]);
         logger.debug("pids" + pids);
 
-        if (null == rid) return ResultUtils.IllegalArgumentError();
+        if (null == rid) return ResultUtils.illegalArgumentError("rid");
         //如果 数组为0长度为0 的话就是全部删除
         //这里采用删除后重新插入的策略
         int v;

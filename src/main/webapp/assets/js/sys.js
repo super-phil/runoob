@@ -95,9 +95,9 @@ $(function () {
      * @param callback
      */
     sys.tip = function (result, callback) {
-        if (result.data.code == 0) {
+        if (result.code == 0) {
             swal({
-                title: result.data.msg,//提示消息
+                title: result.msg,//提示消息
                 type: "success",//成功类型
                 timer: 1500,//1.8秒后自动关闭
                 showConfirmButton: false//不显示确认按钮
@@ -107,7 +107,7 @@ $(function () {
             }
         } else {
             swal({
-                    title: result.data.msg,//提示消息
+                    title: result.msg,//提示消息
                     type: "error"//成功类型
                 }
             );

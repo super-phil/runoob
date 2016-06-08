@@ -80,9 +80,9 @@ public class PrivilegeController {
         }
         int v = privilegeService.insert(privilege);
         if (v > 0) {
-            return ResultUtils.addSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.addError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -97,9 +97,9 @@ public class PrivilegeController {
     public Object update(Privilege privilege) {
         int v = privilegeService.updateByPrimaryKeySelective(privilege);
         if (v > 0) {
-            return ResultUtils.updateSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.updateError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -114,9 +114,9 @@ public class PrivilegeController {
     public Object del(@RequestParam("id") long id) {
         int v = privilegeService.deleteByPrimaryKey(id);
         if (v > 0) {
-            return ResultUtils.delSuccess();
+            return ResultUtils.OperationSuccess();
         } else {
-            return ResultUtils.delError();
+            return ResultUtils.OperationError(v);
         }
     }
 
@@ -130,7 +130,7 @@ public class PrivilegeController {
     @RequestMapping(value = "tree", method = RequestMethod.POST)
     public Object tree(@RequestParam(value = "id", required = false) Long id) {
         List<TreeNode> list = new ArrayList<>();
-        return ResultUtils.data(treeNodeService.getTree(0, list));
+        return ResultUtils.list(treeNodeService.getTree(0, list));
     }
 
 
