@@ -1,0 +1,9 @@
+<script id="tpl-test" type="text/html">
+    <p>{{name}}</p>
+    <div class="entry">
+        {{!-- only output author name if an author exists --}}
+        {{#if author}}
+        <h1>{{name}} {{name}}</h1>
+        {{/if}}
+    </div>
+</script>

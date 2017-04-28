@@ -12,7 +12,7 @@ public interface MailService {
      * @param subject   the  主题
      * @param text      the  内容
      */
-    void sendSimpleMail(String toAddress,String subject,String text);
+    void sendSimpleMail(String toAddress, String subject, String text);
 
     /**
      * Send html mail.

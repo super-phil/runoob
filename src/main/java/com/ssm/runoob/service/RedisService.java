@@ -13,7 +13,7 @@ public interface RedisService<K,V> {
      * @param k the k
      * @param v the v
      */
-    void set(K k,V v);
+    void set(K k, V v);
 
     /**
      * Get v.
