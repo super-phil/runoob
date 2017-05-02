@@ -38,7 +38,7 @@
                 });
             }
         }
-    }
+    };
 })(jQuery);
 //方法扩展
 $.extend({
@@ -46,3 +46,6 @@ $.extend({
         console.info(o)
     }
 });
+(function () {
+    $(".navbar").hbs({debug: true, name: "navbar.html"}, {name: "Alan", author: true});
+})();
