@@ -9,31 +9,27 @@
      */
     //方法扩展
     $.fn.hbs = function (options, data) {
-        //TODO 这里是默认路径
-        //整个项目结构
-        //webapp
-        //  html
-        //  js
-        //  tpl
         var defaults = {
             debug: false,//默认非debugger模式
+            suffix: ".html",
             baseUrl: "../tpl",
-            name: "demo.html"//模版名称
+            name: "demo"//模版名称
         };
         var opts = $.extend(defaults, options);
         var me = this;
-        var url = opts.baseUrl + "/" + opts.name + "?v=" + Math.random().valueOf();
+        var fullName = opts.name + opts.suffix;
+        var url = opts.baseUrl + "/" + fullName + "?v=" + Math.random().valueOf();
         if (opts.debug) {
             $.get(url, function (obj) {
                 me.html(Handlebars.compile($(obj).html())(data));
-                sessionStorage.removeItem(opts.name)
+                sessionStorage.removeItem(fullName)
             });
         } else {
-            if (sessionStorage.getItem(opts.name)) {
-                me.html(Handlebars.compile(sessionStorage.getItem(opts.name))(data))
+            if (sessionStorage.getItem(fullName)) {
+                me.html(Handlebars.compile(sessionStorage.getItem(fullName))(data))
             } else {
                 $.get(url, function (obj) {
-                    sessionStorage.setItem(opts.name, $(obj).html());
+                    sessionStorage.setItem(fullName, $(obj).html());
                     me.html(Handlebars.compile($(obj).html())(data));
                 });
             }
@@ -47,5 +43,14 @@ $.extend({
     }
 });
 (function () {
-    $(".navbar").hbs({debug: true, name: "navbar.html"}, {name: "Alan", author: true});
+    $(".navbar").hbs({/*debug: true, */name: "navbar"},
+        {
+            brand: {name: "Runoob Template"},
+            nav: [
+                {active: true, name: "菜单一", href: "#"},
+                {name: "菜单二"},
+                {name: "百度", href: "http://www.baidu.com"}
+            ]
+        }
+    );
 })();
